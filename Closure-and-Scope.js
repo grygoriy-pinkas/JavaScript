@@ -30,12 +30,12 @@ console.log(sum(5)(-1));
 //возвращает его.
 //рішення з обєктом
 function makeBuffer() {
-    var obj = {value:''};
+    var obj = { value: '' };
 
     return function buffer(arg) {
-        if(arg !== undefined){
-       // arg = arg + '';
-        obj.value += arg;
+        if (arg !== undefined) {
+            // arg = arg + '';
+            obj.value += arg;
         }
         //console.log(obj.value);
         return obj.value;
@@ -156,9 +156,9 @@ var arr = [1, 2, 3, 4, 5, 6, 7];
 console.log(filter(arr, inArray([1, 2, 10])));
 
 function inBetween(a, b) {
-    return function(item){
-      return  item >= a && item <= b ? true : false;
-      
+    return function(item) {
+        return item >= a && item <= b ? true : false;
+
     }
 }
 
@@ -169,6 +169,17 @@ console.log(filter(arr, function(a) {
     return a % 2 == 0
 })); // 2,4,6
 
+//ще один варіант(покращений) inArray
+function inArray(array) {
+    return function(x) {
+        var a = false;
+        if (array.indexOf(x) != -1) {
+            і
+            a = true;
+        }
+        return a;
+    }
+}
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -
 

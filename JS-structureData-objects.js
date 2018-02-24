@@ -729,7 +729,7 @@ function unique(arr) {
     //         arr.splice(i, 1);
     //     }
     // }
-    console.log(arr);
-    //return arr;
+    // console.log(arr);
+    return arr;
 }
-alert(unique(strings));
+console.log(unique(strings));
