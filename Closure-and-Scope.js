@@ -28,14 +28,17 @@ console.log(sum(5)(-1));
 // Вызов makeBuffer должен возвращать такую функцию buffer, которая при вызове buffer(value) 
 //добавляет значение в некоторое внутреннее хранилище, а при вызове без аргументов buffer() – 
 //возвращает его.
-
+//рішення з обєктом
 function makeBuffer() {
-    var buffer = {};
+    var obj = {value:''};
 
     return function buffer(arg) {
-        arg = arg + '';
-        buffer.value += arg;
-        return buffer.value;
+        if(arg !== undefined){
+       // arg = arg + '';
+        obj.value += arg;
+        }
+        //console.log(obj.value);
+        return obj.value;
     }
 
 }
@@ -126,40 +129,45 @@ console.log(buffer());
 // filter(arr, inArray([1,2,3])) – выберет только элементы, совпадающие с одним из значений массива.
 
 function filter(arr, func) {
-    return arr.sort(func);
-}
-
-function inBetween(a, b) {
-    arr.filter(function(i, item, arr) {
-        return arr[item] > a && arr[item] < b ? true : false;
+    var newArr = [];
+    arr.forEach(function(item, i, arr) {
+        if (func(item)) {
+            newArr.push(item);
+        }
     })
+
+    return newArr;
 }
 
 function inArray(array) {
     return function(x) {
-        //console.log(array);
+        var a;
         array.forEach(function(item, i) {
             if (item == x) {
-                return item;
-            } else {
-                return false;
+                a = true;
+                return a;
             }
         });
-
+        return a;
     }
 }
 
 var arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(filter(arr, inArray([1, 2, 10])));
+
+function inBetween(a, b) {
+    return function(item){
+      return  item >= a && item <= b ? true : false;
+      
+    }
+}
+
+
+console.log(filter(arr, inBetween(3, 6))); // 3,4,5,6
 
 console.log(filter(arr, function(a) {
     return a % 2 == 0
 })); // 2,4,6
-
-var arr = [1, 2, 3, 4, 5, 6, 7];
-
-console.log(filter(arr, inBetween(3, 6))); // 3,4,5,6
-
-console.log(filter(arr, inArray([1, 2, 10])));
 
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -

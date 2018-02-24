@@ -1,5 +1,4 @@
-Document is not verify!!!
-    Массив: перебирающие методы
+Массив: перебирающие методы
     // Перепишите цикл через map
     // важность: 5
     // Код ниже получает из массива строк новый массив, содержащий их длины:
@@ -297,3 +296,5 @@ console.log(formatDate(new Date(new Date - 1))); // "только что"
 console.log(formatDate(new Date(new Date - 30 * 1000))); // "30 сек. назад"
 console.log(formatDate(new Date(new Date - 5 * 60 * 1000))); // "5 мин. назад"
 console.log(formatDate(new Date(new Date - 86400 * 1000)));
+
+uhbujhsq88
