@@ -174,7 +174,7 @@ function inArray(array) {
     return function(x) {
         var a = false;
         if (array.indexOf(x) != -1) {
-            і
+
             a = true;
         }
         return a;
