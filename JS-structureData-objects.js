@@ -727,7 +727,7 @@ function unique(arr) {
     // for (var i = arr.length; i >= 0; i--) {
     //     if (arr[i] == undefined) {
     //         arr.splice(i, 1);
-    //     }
+    //   /  }
     // }
     // console.log(arr);
     return arr;
