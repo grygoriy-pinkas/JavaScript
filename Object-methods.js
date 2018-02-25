@@ -283,3 +283,6 @@ console.log(result); // 8
 console.log(powerCalc);
 //console.log(powerCalc.mult);
 //powerCalc.alert();
+
+_________________________________________________________________________________
+//далі буде
