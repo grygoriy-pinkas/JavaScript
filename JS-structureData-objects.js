@@ -8,11 +8,13 @@ function isEmpty(obj) {
     for (var key in obj) {
         counter++;
     }
-    if (counter) {
-        return false
-    } else {
-        return true;
-    }
+    // if (counter) {
+    //     return false
+    // } else {
+    //     return true;
+    // }
+    return !!counter;
+=======
 }
 
 var schedule = {};
@@ -646,6 +648,10 @@ function aclean(arr) {
     for (var i = 0; i < arr.length; i++) {
         arr2[i] = arr[i];
     }
+    // масив можна скопіювати простіше
+    // arr2 = arr.slice();
+    // і потрібно зміним давати логічні змінні
+    // для маленької функції це не так критично, а в великій програмі дуже
 
     for (var i = 0; i < arr.length; i++) {
         arr2[i] = [];
@@ -653,6 +659,7 @@ function aclean(arr) {
         for (var j = 0; j < arr[i].length; j++) {
             arr2[i][j] = arr[i].charAt(j).toLowerCase();
             arr2[i][j] = arr2[i][j].charCodeAt(0);
+            //660 стрічка перепише 659, arr2[i][j] = arr[i].charAt(j).toLowerCase(); - не має сенсу
         }
         var sum = 0;
         for (var k = 0; k < arr2[i].length; k++) {
@@ -661,6 +668,7 @@ function aclean(arr) {
         }
         arr2[i] = sum;
     }
+    // можна порівнювати стрічки, але потрібно привести до одного регістру і порівнювати стрічку як звичайну так і розвернену
     for (var i = 0; i < arr2.length; i++) {
         for (var j = i + 1; j < arr2.length; j++) {
             // console.log(arr2[i]);
@@ -697,6 +705,7 @@ function unique(arr) {
     for (var i = 0; i < arr.length; i++) {
         for (var j = i + 1; j < arr.length; j++) {
             if (arr[i] != undefined && arr[i] == arr[j]) {
+
                 arr[j] = undefined;
             }
         }
@@ -708,4 +717,32 @@ function unique(arr) {
     }
     console.log(arr);
 }
+
+=======
 alert(unique(strings));
+-- -- -
+//пореробив згідно твоїх рекомендацій
+var strings = ["кришна", "кришна", "харе", "харе",
+    "харе", "харе", "кришна", "кришна", "8-()"
+];
+
+function unique(arr) {
+    for (var i = arr.length; i >= 0; i--) {
+        // var arr = -1;
+        for (var j = i - 1; j >= 0; j--) {
+            if (arr[j] == arr[i]) {
+                arr.splice(j, 1);
+            }
+        }
+    }
+    // for (var i = arr.length; i >= 0; i--) {
+    //     if (arr[i] == undefined) {
+    //         arr.splice(i, 1);
+    //   /  }
+    // }
+    // console.log(arr);
+    return arr;
+}
+console.log(unique(strings));
+=======
+
