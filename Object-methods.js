@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 637a2dbc5d5d69bab6846ce139c60645bc587b60
 Методы объектов и контекст вызова
 Методы объектов, this
 
@@ -359,7 +354,6 @@ function Accumulator(startingValue) {
             // }
         });
     }
-<<<<<<< HEAD
     var vasya = new User("Василий Попкин");
 
     // чтение firstName/lastName
@@ -372,36 +366,40 @@ function Accumulator(startingValue) {
 
     console.log(vasya.fullName);
     console.log(vasya);
-=======
->>>>>>> a4e8637f3141d1b7603559208d0e3f41a78341c1
-=======
-}
-// var calc = new Calculator;
 
-//console.log(calc.calculate("3 + 7"));
-// console.log(calc.calculate("5317 - 73"));
+    ___________________________________________________________
 
-var powerCalc = new Calculator;
-powerCalc.addMethod("*", function(a, b) {
-    return a * b;
-});
-powerCalc.addMethod("/", function(a, b) {
-    return a / b;
-});
-powerCalc.addMethod("**", function(a, b) {
-    return Math.pow(a, b);
-});
+    Статические и фабричные методы
 
-var result = powerCalc.calculate("2 * 3");
-// var result2 = powerCalc.calculate("**", function(2, 3) {
-//     return Math.pow(a, b);
-// });
-console.log(result); // 8
-console.log(powerCalc);
-//console.log(powerCalc.mult);
-//powerCalc.alert();
-___________________________________________________________
-//далі буде!!!
-=======
+    Счетчик объектов
+    // важность: 5
+    // Добавить в конструктор Article:
 
->>>>>>> 637a2dbc5d5d69bab6846ce139c60645bc587b60
+    // Подсчёт общего количества созданных объектов.
+    // Запоминание даты последнего созданного объекта.
+    // Используйте для этого статические свойства.
+
+    // Пусть вызов Article.showStats() выводит то и другое
+
+    function Article() {
+        this.created = new Date();
+        Article.count++;
+        Article.date = this.created;
+        //console.log(Article.date);
+    }
+    Article.date = '';
+    Article.count = 0;
+    Article.showStats = function() {
+        return console.log("All counts:" + this.count + ", Last:" + this.date);
+    }
+
+
+    new Article();
+    new Article();
+
+    Article.showStats(); // Всего: 2, Последняя: (дата)
+
+    new Article();
+
+    Article.showStats(); // Всего: 3, Последняя: (дата)
+    ___________________________________________________________
