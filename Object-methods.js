@@ -128,16 +128,15 @@ sum(0)(1)(2)(3)(4)(5) == 15;
 
 function Calculator() {
     this.read = function() {
-            this.a = +prompt("Enter first number", '1');
-            this.b = +prompt("Enter second number", '1');
-        },
-        this.sum = function() {
-            return this.a + this.b;
-        },
-        this.mul = function() {
-            return this.a * this.b;
-        }
-    return this;
+        this.a = +prompt("Enter first number", '1');
+        this.b = +prompt("Enter second number", '1');
+    }
+    this.sum = function() {
+        return this.a + this.b;
+    }
+    this.mul = function() {
+        return this.a * this.b;
+    }
 };
 
 var calculator = new Calculator();
@@ -167,121 +166,203 @@ function Accumulator(startingValue) {
         //хотів тут реалізувати внутрішній функціонал(якщо функція не призначена для this то вона застосовується 
         //тільки для внутрішнього використання і не буде видна при виклику з дочірніми обєктами), але 
         //воно тут виявилось непотрібним
-    function sum() {
-        return this.value += this.read;
-    }
-    return this.value;
-}
 
-var accumulator = new Accumulator(1); // начальное значение 1
-accumulator.read(); // прибавит ввод prompt к текущему значению
-accumulator.read(); // прибавит ввод prompt к текущему значению
-alert(accumulator.value); // выведет текущее значение
-_________________________________________________________________________________
-Создайте калькулятор
-// важность: 5
-// Напишите конструктор Calculator, который создаёт расширяемые объекты-калькуляторы.
-// Эта задача состоит из двух частей, которые можно решать одна за другой.
-// Первый шаг задачи: вызов calculate(str) принимает строку, например «1 + 2», с жёстко заданным форматом
-//  «ЧИСЛО операция ЧИСЛО» (по одному пробелу вокруг операции), и возвращает результат. Понимает плюс + и
-//   минус -.
-// Пример использования:
+    var accumulator = new Accumulator(1); // начальное значение 1
+    accumulator.read(); // прибавит ввод prompt к текущему значению
+    accumulator.read(); // прибавит ввод prompt к текущему значению
+    alert(accumulator.value); // выведет текущее значение
+    _________________________________________________________________________________
+    Создайте калькулятор
+    // важность: 5
+    // Напишите конструктор Calculator, который создаёт расширяемые объекты-калькуляторы.
+    // Эта задача состоит из двух частей, которые можно решать одна за другой.
+    // Первый шаг задачи: вызов calculate(str) принимает строку, например «1 + 2», с жёстко заданным форматом
+    //  «ЧИСЛО операция ЧИСЛО» (по одному пробелу вокруг операции), и возвращает результат. Понимает плюс + и
+    //   минус -.
+    // Пример использования:
 
-// var calc = new Calculator;
+    // var calc = new Calculator;
 
-// alert( calc.calculate("3 + 7") ); // 10
-// Второй шаг – добавить калькулятору метод addMethod(name, func), который учит калькулятор новой операции.
-//  Он получает имя операции name и функцию от двух аргументов func(a,b), которая должна её реализовывать.
+    // alert( calc.calculate("3 + 7") ); // 10
+    // Второй шаг – добавить калькулятору метод addMethod(name, func), который учит калькулятор новой операции.
+    //  Он получает имя операции name и функцию от двух аргументов func(a,b), которая должна её реализовывать.
 
-// Например, добавим операции умножить *, поделить / и возвести в степень **:
+    // Например, добавим операции умножить *, поделить / и возвести в степень **:
 
-// var powerCalc = new Calculator;
-// powerCalc.addMethod("*", function(a, b) {
-//   return a * b;
-// });
-// powerCalc.addMethod("/", function(a, b) {
-//   return a / b;
-// });
-// powerCalc.addMethod("**", function(a, b) {
-//   return Math.pow(a, b);
-// });
+    // var powerCalc = new Calculator;
+    // powerCalc.addMethod("*", function(a, b) {
+    //   return a * b;
+    // });
+    // powerCalc.addMethod("/", function(a, b) {
+    //   return a / b;
+    // });
+    // powerCalc.addMethod("**", function(a, b) {
+    //   return Math.pow(a, b);
+    // });
 
-// var result = powerCalc.calculate("2 ** 3");
-// alert( result ); // 8
-// Поддержка скобок и сложных математических выражений в этой задаче не требуется.
-// Числа и операции могут состоять из нескольких символов. Между ними ровно один пробел.
-// Предусмотрите обработку ошибок. Какая она должна быть – решите сами.
+    // var result = powerCalc.calculate("2 ** 3");
+    // alert( result ); // 8
+    // Поддержка скобок и сложных математических выражений в этой задаче не требуется.
+    // Числа и операции могут состоять из нескольких символов. Между ними ровно один пробел.
+    // Предусмотрите обработку ошибок. Какая она должна быть – решите сами.
 
-function Calculator() {
-    this.calculate = function(str) {
-        // var gap = str.indexOf(' ');
-        function innerFunc() {};
-        var a = +str.substr(0, str.indexOf(' '));
-        var b = +str.substr(str.indexOf(' ', str.indexOf(' ') + 2));
-        var operator = str.substring(str.indexOf(' ') + 1, str.lastIndexOf(' '));;
+    function Calculator() {
+        this.calculate = function(str) {
+            var arr = str.split(' ');
+            var a = +arr[0];
+            var b = +arr[2];
+            var operator = arr[1];
 
-        if (operator == '+') {
-            return this.a + this.b;
-        } else if (operator == "-") {
-            return this.a - this.b;
-        } else {
-            //ця частина коду чомусь каже що this.operator не є функцією
-            //хоча виводячи обєкт в консолі отримуємо 
-            // *:ƒ(a, b) 
-            // **:ƒ(a, b) 
-            // /:ƒ(a, b)
-            // addMethod: ƒ(name, func)
-            // alert:ƒ()
-            // calculate:ƒ(str)
-            // __proto__:Object
-            //в одному з коментів таке працює
-            return this.operator(a, b);
-            //var call = "this." + operator;
-            //return call(a, b);
-            //console.log(call);
+            if (operator == '+') {
+                return this.a + this.b;
+            } else if (operator == "-") {
+                return this.a - this.b;
+            } else {
+
+                return this[operator](a, b);
+
+            }
+            console.log(typeof a);
+            console.log(typeof b);
+            console.log(a);
+            console.log(b);
+            console.log(operator);
         }
-        console.log(typeof a);
-        console.log(typeof b);
-        console.log(a);
-        console.log(b);
-        console.log(operator);
-    }
-    this.addMethod = function(name, func) {
-        //чому так не записує методи а змінну????
-        //this.name = func;
-        //а так записує
-        //піддивився її в одному з коментарів
-        this[name] = func;
-    }
-    this.alert = function() {
-        for (var key in this) {
-            console.log(key);
+        this.addMethod = function(name, func) {
+            this[name] = func;
+        }
+        this.alert = function() {
+            for (var key in this) {
+                console.log(key);
+            }
         }
     }
-}
-// var calc = new Calculator;
+    var powerCalc = new Calculator;
+    powerCalc.addMethod("*", function(a, b) {
+        return a * b;
+    });
+    powerCalc.addMethod("/", function(a, b) {
+        return a / b;
+    });
+    powerCalc.addMethod("**", function(a, b) {
+        return Math.pow(a, b);
+    });
 
-//console.log(calc.calculate("3 + 7"));
-// console.log(calc.calculate("5317 - 73"));
+    var result = powerCalc.calculate("2 * 3");
 
-var powerCalc = new Calculator;
-powerCalc.addMethod("*", function(a, b) {
-    return a * b;
-});
-powerCalc.addMethod("/", function(a, b) {
-    return a / b;
-});
-powerCalc.addMethod("**", function(a, b) {
-    return Math.pow(a, b);
-});
+    console.log(result); // 8
+    console.log(powerCalc);
 
-var result = powerCalc.calculate("2 * 3");
-// var result2 = powerCalc.calculate("**", function(2, 3) {
-//     return Math.pow(a, b);
-// });
-console.log(result); // 8
-console.log(powerCalc);
-//console.log(powerCalc.mult);
-//powerCalc.alert();
-___________________________________________________________
-//далі буде!!!
+    ___________________________________________________________
+
+    Дескрипторы, геттеры и сеттеры свойств
+
+    Добавить get / set - свойства
+        // важность: 5
+        // Вам попал в руки код объекта User, который хранит имя и фамилию в свойстве this.fullName:
+
+    // function User(fullName) {
+    //   this.fullName = fullName;
+    // }
+
+    // var vasya = new User("Василий Попкин");
+    // Имя и фамилия всегда разделяются пробелом.
+
+    // Сделайте, чтобы были доступны свойства firstName и lastName, причём не только на чтение, 
+    // но и на запись, вот так:
+
+    // var vasya = new User("Василий Попкин");
+
+    // // чтение firstName/lastName
+    // alert( vasya.firstName ); // Василий
+    // alert( vasya.lastName ); // Попкин
+
+    // // запись в lastName
+    // vasya.lastName = 'Сидоров';
+
+    // alert( vasya.fullName ); // Василий Сидоров
+    // Важно: в этой задаче fullName должно остаться свойством, а firstName/lastName – реализованы 
+    // через get/set. Лишнее дублирование здесь ни к чему.
+
+    ____
+    //ненаю чи там мало б працювати але не працює
+    function User(fullName) {
+        this.fullName = fullName;
+
+
+        Object.defineProperty(User, "firstName", {
+            get: function() {
+                return this.firstName;
+            },
+            set: function(fullName) {
+                var split = this.fullName.split(' ');
+                this.firstName = split[0];
+            }
+        });
+
+        Object.defineProperty(User, "lastName", {
+            get: function() {
+                return this.lastName;
+            },
+            set: function(fullName) {
+                var split = this.fullName.split(' ');
+                this.lastName = split[1];
+            }
+        });
+    }
+    var vasya = new User("Василий Попкин");
+
+    // чтение firstName/lastName
+    console.log(vasya.firstName); // Василий
+    console.log(vasya.lastName); // Попкин
+
+    // запись в lastName
+    vasya.lastName = 'Сидоров';
+
+    console.log(vasya.fullName);
+    console.log(vasya);
+    ____
+    ____
+
+    function User(fullName) {
+        this.fullName = fullName;
+        var split = fullName.split(' ');
+        console.log(split);
+        this.firstName = split[0];
+        this.lastName = split[1];
+
+        Object.defineProperty(User, "firstName", {
+            get: function() {
+                return this.firstName;
+            },
+            set: function(fullName) {
+                var split = this.fullName.split(' ');
+                this.firstName = split[0];
+            }
+        });
+
+        //також виникає питання чому переповнюється стек при вказуванні в рядку нижче this замість User?
+        Object.defineProperty(User, "lastName", {
+            get: function() {
+                return this.lastName;
+            },
+            //я тут спеціально закоментував нижче щоб переконатись що код працює без сеттера
+            //тоді нащо тут його???? код без явного задавання значень не працює.
+            // set: function(value) {
+            //     var split = value.split(' ');
+            //     this.lastName = split[1];
+            // }
+        });
+    }
+    var vasya = new User("Василий Попкин");
+
+    // чтение firstName/lastName
+    console.log(vasya.firstName); // Василий
+    console.log(vasya.lastName); // Попкин
+
+    // запись в lastName
+    //тут прямий запис без сеттера?
+    vasya.lastName = 'Сидоров';
+
+    console.log(vasya.fullName);
+    console.log(vasya);
