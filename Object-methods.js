@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 637a2dbc5d5d69bab6846ce139c60645bc587b60
 Методы объектов и контекст вызова
 Методы объектов, this
 
@@ -355,6 +359,7 @@ function Accumulator(startingValue) {
             // }
         });
     }
+<<<<<<< HEAD
     var vasya = new User("Василий Попкин");
 
     // чтение firstName/lastName
@@ -369,3 +374,34 @@ function Accumulator(startingValue) {
     console.log(vasya);
 =======
 >>>>>>> a4e8637f3141d1b7603559208d0e3f41a78341c1
+=======
+}
+// var calc = new Calculator;
+
+//console.log(calc.calculate("3 + 7"));
+// console.log(calc.calculate("5317 - 73"));
+
+var powerCalc = new Calculator;
+powerCalc.addMethod("*", function(a, b) {
+    return a * b;
+});
+powerCalc.addMethod("/", function(a, b) {
+    return a / b;
+});
+powerCalc.addMethod("**", function(a, b) {
+    return Math.pow(a, b);
+});
+
+var result = powerCalc.calculate("2 * 3");
+// var result2 = powerCalc.calculate("**", function(2, 3) {
+//     return Math.pow(a, b);
+// });
+console.log(result); // 8
+console.log(powerCalc);
+//console.log(powerCalc.mult);
+//powerCalc.alert();
+___________________________________________________________
+//далі буде!!!
+=======
+
+>>>>>>> 637a2dbc5d5d69bab6846ce139c60645bc587b60
