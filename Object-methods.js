@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Методы объектов и контекст вызова
 Методы объектов, this
 
@@ -366,3 +367,5 @@ function Accumulator(startingValue) {
 
     console.log(vasya.fullName);
     console.log(vasya);
+=======
+>>>>>>> a4e8637f3141d1b7603559208d0e3f41a78341c1

@@ -13,8 +13,11 @@ function isEmpty(obj) {
     // } else {
     //     return true;
     // }
-    return !!counter;
-=======
+    return !!counter; ===
+    === =
+    return !!counter; ===
+    ===
+    =
 }
 
 var schedule = {};
@@ -695,7 +698,7 @@ aclean(arr);
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 //Пусть arr – массив строк.
 //Напишите функцию unique(arr), которая возвращает массив, содержащий только уникальные элементы arr.
-
+//coment
 var strings = ["кришна", "кришна", "харе", "харе",
     "харе", "харе", "кришна", "кришна", "8-()"
 ];
@@ -704,7 +707,6 @@ function unique(arr) {
     for (var i = 0; i < arr.length; i++) {
         for (var j = i + 1; j < arr.length; j++) {
             if (arr[i] != undefined && arr[i] == arr[j]) {
-=======
                 arr[j] = undefined;
             }
         }
@@ -741,4 +743,3 @@ function unique(arr) {
     return arr;
 }
 console.log(unique(strings));
-=======
