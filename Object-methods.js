@@ -403,3 +403,132 @@ function Accumulator(startingValue) {
 
     Article.showStats(); // Всего: 3, Последняя: (дата)
     ___________________________________________________________
+
+
+    Перепишите суммирование аргументов
+    // важность: 5
+    // Есть функция sum, которая суммирует все элементы массива:
+
+    //  function sum(arr) {
+    //   return arr.reduce(function(a, b) {
+    //     return a + b;
+    //   });
+    // }
+
+    // alert( sum([1, 2, 3]) ); // 6 (=1+2+3)
+    // Создайте аналогичную функцию sumArgs(), которая будет суммировать все свои аргументы:
+
+    // function sumArgs() {
+    //   /* ваш код */
+    // }
+
+    // alert( sumArgs(1, 2, 3) ); // 6, аргументы переданы через запятую, без массива
+    // Для решения примените метод reduce к arguments, используя call, apply или одалживание метода.
+
+    // P.S. Функция sum вам не понадобится, она приведена в качестве примера использования reduce для похожей задачи.
+
+    function sumArgs() {
+        var args = [].slice.call(arguments);
+        return args.reduce(function(a, b) {
+            return a + b;
+        });
+    }
+
+    console.log(sumArgs(1, 2, 3)); // 6, аргументы переданы через запятую, без массива
+
+    //хотів тут зробити красивий код та чомусь не хоче брати reduce з пустого масиву. поясниш чому?
+    //Uncaught TypeError: Reduce of empty array with no initial value
+    function sumArgs() {
+        return [].reduce(function(a, b) {
+            return a + b;
+        }).apply(arguments);
+
+    }
+
+    console.log(sumArgs(1, 2, 3)); // 6, аргументы переданы через запятую, без массива
+    ___________________________________________________________
+
+    Примените функцию к аргументам
+    // важность: 5
+    // Напишите функцию applyAll(func, arg1, arg2...), которая получает функцию func и произвольное количество аргументов.
+
+    // Она должна вызвать func(arg1, arg2...), то есть передать в func все аргументы, начиная со второго, и возвратить результат.
+
+    // Например:
+
+    // // Применить Math.max к аргументам 2, -2, 3
+    // alert( applyAll(Math.max, 2, -2, 3) ); // 3
+
+    // // Применить Math.min к аргументам 2, -2, 3
+    // alert( applyAll(Math.min, 2, -2, 3) ); // -2
+    // Область применения applyAll, конечно, шире, можно вызывать её и со своими функциями:
+    // function sum() { // суммирует аргументы: sum(1,2,3) = 6
+    //   return [].reduce.call(arguments, function(a, b) {
+    //     return a + b;
+    //   });
+    // }
+
+    // function mul() { // перемножает аргументы: mul(2,3,4) = 24
+    //   return [].reduce.call(arguments, function(a, b) {
+    //     return a * b;
+    //   });
+    // }
+
+    // alert( applyAll(sum, 1, 2, 3) ); // -> sum(1, 2, 3) = 6
+    // alert( applyAll(mul, 2, 3, 4) ); // -> mul(2, 3, 4) = 24
+
+    function applyAll() {
+        var arguments = [].slice.call(arguments);
+        func = arguments[0];
+        arguments = arguments.slice(1);
+        //поясни по своєму чому працює саме з таким визовом а не func(arguments) 
+        //ми ж ніби то записали в змінну функцію
+        return func.apply(func, arguments);
+    }
+
+    console.log(applyAll(Math.max, 2, -2, 3)); // 3
+
+    function sum() { // суммирует аргументы: sum(1,2,3) = 6
+        console.log(arguments);
+        return [].reduce.call(arguments, function(a, b) {
+            return a + b;
+        });
+    }
+    console.log(applyAll(sum, 1, 2, 3)); // -> sum(1, 2, 3) = 6
+
+    function mul() { // перемножает аргументы: mul(2,3,4) = 24
+        return [].reduce.call(arguments, function(a, b) {
+            return a * b;
+        });
+    }
+
+
+    alert(applyAll(mul, 2, 3, 4)); // -> mul(2, 3, 4) = 24
+
+    // Применить Math.max к аргументам 2, -2, 3
+    alert(applyAll(Math.max, 2, -2, 3)); // 3
+
+    // Применить Math.min к аргументам 2, -2, 3
+    alert(applyAll(Math.min, 2, -2, 3)); // -2
+    _________________________________________________________________________________
+    //експереметував щось таке)))
+    function applyAll() {
+        var arguments = [].slice.call(arguments);
+        applyAll.func = arguments[0];
+        arguments = arguments.slice(1);
+
+        console.log(arguments);
+        console.log(func);
+        //return func.apply(func, arguments);
+        return applyAll.func();
+    }
+
+    console.log(applyAll(Math.max, 2, -2, 3)); // 3
+
+    function sum() { // суммирует аргументы: sum(1,2,3) = 6
+        console.log(arguments);
+        return [].reduce.call(arguments, function(a, b) {
+            return a + b;
+        });
+    }
+    console.log(applyAll(sum, 1, 2, 3)); // -> sum(1, 2, 3) = 6
