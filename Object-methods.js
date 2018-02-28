@@ -290,7 +290,7 @@ function Accumulator(startingValue) {
         this.fullName = fullName;
 
 
-        Object.defineProperty(User, "firstName", {
+        Object.defineProperty(this, "firstName", {
             get: function() {
                 return this.firstName;
             },
@@ -300,7 +300,7 @@ function Accumulator(startingValue) {
             }
         });
 
-        Object.defineProperty(User, "lastName", {
+        Object.defineProperty(this, "lastName", {
             get: function() {
                 return this.lastName;
             },
@@ -323,7 +323,7 @@ function Accumulator(startingValue) {
     console.log(vasya);
     ____
     ____
-
+    //не побачив твоїх коментів про реалізацію задачі нижче. чи вона прийнятна?
     function User(fullName) {
         this.fullName = fullName;
         var split = fullName.split(' ');
