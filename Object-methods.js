@@ -532,3 +532,40 @@ function Accumulator(startingValue) {
         });
     }
     console.log(applyAll(sum, 1, 2, 3)); // -> sum(1, 2, 3) = 6
+    _________________________________________________________________________________
+
+    //дублюю цю задачку бо вона не попала в останній коміт(тобто її там не видно)
+
+    Статические и фабричные методы
+
+    Счетчик объектов
+    // важность: 5
+    // Добавить в конструктор Article:
+
+    // Подсчёт общего количества созданных объектов.
+    // Запоминание даты последнего созданного объекта.
+    // Используйте для этого статические свойства.
+
+    // Пусть вызов Article.showStats() выводит то и другое
+
+    function Article() {
+        this.created = new Date();
+        Article.count++;
+        Article.date = this.created;
+        //console.log(Article.date);
+    }
+    Article.date = '';
+    Article.count = 0;
+    Article.showStats = function() {
+        return console.log("All counts:" + this.count + ", Last:" + this.date);
+    }
+
+
+    new Article();
+    new Article();
+
+    Article.showStats(); // Всего: 2, Последняя: (дата)
+
+    new Article();
+
+    Article.showStats(); // Всего: 3, Последняя: (дата)
