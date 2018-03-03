@@ -569,3 +569,242 @@ function Accumulator(startingValue) {
     new Article();
 
     Article.showStats(); // Всего: 3, Последняя: (дата)
+
+    _________________________________________________________________________________
+    Привязка контекста и карринг: "bind"
+
+    Использование функции вопросов
+    // важность: 5
+    // Вызов user.checkPassword() в коде ниже должен, при помощи ask, спрашивать пароль и вызывать loginOk/loginFail в зависимости от правильности ответа.
+
+    // Однако, его вызов приводит к ошибке. Почему?
+
+    // Исправьте выделенную строку, чтобы всё работало (других строк изменять не надо).
+
+
+
+    // P.S. Ваше решение должно также срабатывать, если переменная user будет перезаписана, например 
+    //вместо user.checkPassword() в конце будут строки:
+
+    // var vasya = user;
+    // user = null;
+    // vasya.checkPassword();
+
+
+        "use strict";
+
+    function ask(question, answer, ok, fail) {
+        var result = prompt(question, '');
+        if (result.toLowerCase() == answer.toLowerCase()) ok();
+        else fail();
+    }
+
+    var user = {
+        login: 'Василий',
+        password: '12345',
+
+        loginOk: function() {
+            alert(this.login + ' вошёл в сайт');
+        },
+
+        loginFail: function() {
+            alert(this.login + ': ошибка входа');
+        },
+
+        checkPassword: function() {
+            //ask("Ваш пароль?", this.password, this.loginOk, this.loginFail);//this must be change
+            //my attemps
+            // ask("Ваш пароль?", this.password, this.loginOk, this.loginFail).bind(this); 
+            //ask("Ваш пароль?",  this.password, this.loginOk, this.loginFail).bind(this);
+            //this variant was given as solution
+            ask("Ваш пароль?", this.password, this.loginOk.bind(this), this.loginFail.bind(this));
+
+        }
+    };
+    //розкажи що відбувається в цій задачі. не зовсім встигаю за 
+    user.checkPassword();
+    _________________________________________________________________________________
+    Использование функции вопросов с каррингом
+    // важность: 5
+    // Эта задача – усложнённый вариант задачи Использование функции вопросов. В ней объект user изменён.
+
+    // Теперь заменим две функции user.loginOk() и user.loginFail() на единый метод: user.loginDone(true/false), который нужно вызвать с true при верном ответе и с false – при неверном.
+
+    // Код ниже делает это, соответствующий фрагмент выделен.
+
+    // Сейчас он обладает важным недостатком: при записи в user другого значения объект перестанет корректно работать, вы увидите это, запустив пример ниже (будет ошибка).
+
+    // Как бы вы написали правильно?
+
+    // Исправьте выделенный фрагмент, чтобы код заработал.
+        "use strict";
+
+    function ask(question, answer, ok, fail) {
+        var result = prompt(question, '');
+        if (result.toLowerCase() == answer.toLowerCase()) ok();
+        else fail();
+    }
+
+    var user = {
+        login: 'Василий',
+        password: '12345',
+
+        // метод для вызова из ask
+        loginDone: function(result) {
+            alert(this.login + (result ? ' вошёл в сайт' : ' ошибка входа'));
+        },
+        //i can change since
+        checkPassword: function() {
+            //по анології з попередньою зафіксував тут this
+            var self = this;
+            ask("Ваш пароль?", this.password,
+                function() {
+                    //і визвай у його контексті
+                    self.loginDone(true);
+                },
+                function() {
+                    self.loginDone(false);
+                }
+            );
+            //to that
+            //цей варіант запропонований в розвязку з використанням bind, я мав би вчитися використовувати його
+            //а я використав додаткову зміннну((        
+            //   checkPassword: function() {
+            //     ask("Ваш пароль?", this.password, this.loginDone.bind(this, true), this.loginDone.bind(this, false));
+            //   }
+        }
+    };
+
+    var vasya = user;
+    user = null;
+    vasya.checkPassword();
+    // Изменения должны касаться только выделенного фрагмента.
+    // Если возможно, предложите два решения, одно– с использованием bind, другое– без него.Какое решение лучше ?
+    // решение
+
+    _________________________________________________________________________________
+
+    Функции - обёртки, декораторы
+
+    Логирующий декоратор(1 аргумент)
+        // важность: 5
+        // Создайте декоратор makeLogging(f, log), который берет функцию f и массив log.
+        // Он должен возвращать обёртку вокруг f, которая при каждом вызове записывает («логирует»)
+        // аргументы в log,
+        // а затем передает вызов в f.
+        // В этой задаче можно считать, что у функции f ровно один аргумент.
+        // Работать должно так:
+
+    //зробив по анології з прикладами в статті
+    function work(a) {
+        return a * a / (a + a);
+    }
+
+    function makeLogging(f, log) {
+        // в розвязку передана function declaretion а я анонімну передав. є різниця при подальшому розширенні
+        //функціоналу? 
+        return function() {
+            //console.log(arguments);
+            var result = f.apply(this, arguments);
+            log.push(arguments[0]);
+            return result;
+        }
+    }
+
+    var log = [];
+    work = makeLogging(work, log);
+
+    work(1); // 1, добавлено в log
+    work(5); // 5, добавлено в log
+
+    for (var i = 0; i < log.length; i++) {
+        alert('Лог:' + log[i]); // "Лог:1", затем "Лог:5"
+    }
+
+    _________________________________________________________________________________
+    Логирующий декоратор(много аргументов)
+        // важность: 3
+        // Создайте декоратор makeLogging(func, log), для функции func возвращающий обёртку, которая при 
+        // каждом вызове добавляет её аргументы в массив log.
+        // Условие аналогично задаче Логирующий декоратор (1 аргумент), но допускается func с любым
+        // набором аргументов.
+
+    // Работать должно так:
+    function work(a, b) {
+        alert(a + b); // work - произвольная функция
+    }
+
+    function makeLogging(f, log) {
+        return function() {
+            //console.log(arguments);
+            var result = f.apply(this, arguments);
+            //так реаліззовано на сайті, тут тільки справа в копіюванні? чи не так?
+            //бо з моїм log.push(arguments); казало що join не функція
+            //це тому що log це масив масивів-aarguments, і вкладені масиви не отримують поведінку
+            //звичайного масиву?
+            log.push([].slice.call(arguments));
+            return result;
+        }
+    }
+
+    var log = [];
+    work = makeLogging(work, log);
+    //console.log(log);
+    work(1, 2); // 3
+    work(4, 5); // 9
+
+    for (var i = 0; i < log.length; i++) {
+        console.log(log[i]);
+        var args = log[i]; // массив из аргументов i-го вызова
+        console.log('Лог:' + args.join()); // "Лог:1,2", "Лог:4,5"
+    }
+
+    _________________________________________________________________________________
+
+    Кеширующий декоратор
+    // важность: 5
+    // Создайте декоратор makeCaching(f), который берет функцию f и возвращает обертку, которая кеширует её
+    // результаты.
+    // В этой задаче функция f имеет только один аргумент, и он является числом.
+    // При первом вызове обертки с определенным аргументом – она вызывает f и запоминает значение.
+    // При втором и последующих вызовах с тем же аргументом возвращается запомненное значение.
+
+    function f(x) {
+        return Math.random() * x; // random для удобства тестирования
+    }
+    //я оголосив обєкт тут, а в розвязку він в середині makeCashing, 
+    //так можна робити?
+    var cashe = {};
+    //в розвязку код значно коротший, я поки не можу так писати, мені цим зараз не паритись?
+    //воно приходить з досвідом?
+    function makeCaching(f) {
+        //в функції нижче спрацьовує замикання, я правий?
+        return function() {
+            // var ret =  function wrap(){
+            if (cashe.arg == arguments[0]) {
+                return cashe.res;
+            } else {
+
+                var result = f.apply(this, arguments);
+                cashe.arg = arguments[0];
+                cashe.res = result;
+                // console.log(cashe);
+                return result;
+            }
+        }
+    }
+
+
+    //console.log(makeCaching.cashe);
+    f = makeCaching(f);
+
+    var a, b;
+
+    a = f(1);
+    b = f(1);
+    console.log(a == b); // true (значение закешировано)
+
+    b = f(2);
+    console.log(a == b); // false, другой аргумент => другое значение
+
+    console.log(cashe);
