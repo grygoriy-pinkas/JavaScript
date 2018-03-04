@@ -33,8 +33,9 @@ function formatDate(date) {
     } else if (type == 'Array') {
         var str = new Date(date[0], date[1], date[2]).toISOString();
         res = this.format(str);
-    } else if (type == 'Date') {
+    } else if (type == 'Date') { //str уже має неправильну дату. toISOString() - це барахлить?
         var str = new Date(Date.parse(date)).toISOString();
+        console.log(res);
         res = this.format(str);
     }
     return res;
@@ -43,8 +44,8 @@ function formatDate(date) {
 console.log(formatDate('2011-10-02')); // 02.10.11
 console.log(formatDate(1234567890)); // 14.02.09
 //тут проблемка в останніх двох варіантах віднімає один день від дати, не можу зхрозуміти чому
-console.log(formatDate([2014, 0, 1])); // 01.01.14
-console.log(formatDate(new Date(2014, 0, 1))); // 01.01.14
+console.log(formatDate([2014, 2, 13])); // 01.01.14
+console.log(formatDate(new Date(2014, 5, 11))); // 01.01.14
 
 ______________________________________________________________________
 
@@ -95,7 +96,8 @@ var team = [leader, soldier];
 //   console.log(res);
 //якось так. не все вирішує, але щось в тому є. ще в відповідь не дивився. може щось порекомендуєш то перероблю
 //тоді подивлюсь
-function serial(arr, internalArr = []) {
+function serial(arr) {
+    internalArr = [];
     var result;
     arr.forEach(function(item, i) {
         internalArr.push(JSON.stringify(item, ["name"]));
@@ -104,7 +106,8 @@ function serial(arr, internalArr = []) {
 }
 
 console.log(serial(team));
-//не працює належно
+//виводить таке ["{"name":"Василий Иванович"}", "{"name":"Петька"}"]
+
 var parce = serial(team);
 console.log(JSON.parse(parce));
 
@@ -121,12 +124,15 @@ setTimeout и setInterval
 //це мій код - тут щось дивне відбувається - поясни
 function printNumbersInterval() {
 
-    for (i = 0; i < 20; i++) {
-        var start = setInterval(function() {
+    //взагалі  - через цикл можна вирішити це питання?
+
+    var start = setInterval(function() {
+        for (i = 0; i < 20; i++) {
             console.log(i);
-        }, 100);
-    }
-    clearInterval(start);
+        }
+        if (i == 20)
+            clearInterval(start);
+    }, 100);
 }
 
 printNumbersInterval();
@@ -136,7 +142,7 @@ function printNumbersInterval() {
     var i = 1;
     var timerId = setInterval(function() {
         console.log(i);
-        if (i == 20) clearInterval(timerId);
+        if (i == 20) clearInterval(timerId); //тут можна очищувати змінну з середини її самої????
         i++;
     }, 100);
 }
@@ -193,10 +199,9 @@ function delay(f, ms) {
     return function() {
         //попідглядав трохи в кривенькі коди в коментах.
         //прокоментуй тут  
-        setTimeout(f.apply(f, [].slice.call(arguments)), ms);
-        console.log(f);
-        console.log(ms);
-        // clearTimeout(iter);
+        setTimeout(f.bind(f, [].slice.call(arguments)), ms);
+
+
     }
 }
 
