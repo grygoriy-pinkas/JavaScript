@@ -34,8 +34,9 @@ function formatDate(date) {
         var str = new Date(date[0], date[1], date[2]).toISOString();
         res = this.format(str);
     } else if (type == 'Date') { //str уже має неправильну дату. toISOString() - це барахлить?
-        var str = new Date(Date.parse(date)).toISOString();
-        console.log(res);
+        console.log(date);
+        var str = date.toISOString();
+        console.log(str);
         res = this.format(str);
     }
     return res;
@@ -222,15 +223,19 @@ ______________________________________________________________________
 
 //Упрощённо можно сказать, что debounce возвращает вариант f, срабатывающий не чаще чем раз в ms миллисекунд.
 
-function fi() {
-    console.log("!!!");
+function fi(х) {
+    console.log(х);
 }
 
+// const onComplete = () => {
+//     f.apply(this, args);
+//     timer = null;
+//   }
 function debounce(func, time) {
-    var timer;
+    var timer = null;
     return function() {
         if (timer) clearTimeout(timer);
-        timer = setTimeout(f.bind(this), arguments);
+        timer = setTimeout(f.apply(this), arguments);
     }
 }
 
@@ -290,46 +295,35 @@ ______________________________________________________________________
 var f = function(a) {
     console.log(a)
 };
-//взята з коментів. тести проходить
-function throttle(f, ms) {
-    var bTimer = false,
-        saveThis,
-        saveArgs;
+//взята з коментів. тести проходитьfunction throttle(func, ms) {
 
-    return function() { //тут визивається при передаванні ззовні аргументів???
-        //зберігаємо контекст???
-        saveThis = this,
-            //зберігаємо arguments??взагалі нащо це робити, коли ми не збираємося вставляти arguments в 
-            //звичайний масив???
-            saveArgs = arguments;
-        //варіант коли таймер не встановлений тобто перший раз
-        if (!bTimer) { /* таймер не установлен, 1-й вызов */
-            //виклик toGo (припустим рухи були і в умову не ввійде)
+var isThrottled = false,
+    savedArgs,
+    savedThis;
 
-            fGo();
-        }
-        //переходимо сюди (наскільки знаю return перериває подальше виконання функції)
-        //тобто тут має закфнчитись виконання???
+function wrapper() {
+
+    if (isThrottled) { // (2)
+        savedArgs = arguments;
+        savedThis = this;
         return;
-
-        function fGo() {
-            if (saveArgs === undefined) { /* движений не было - ничего не делаем*/
-                bTimer = false;
-                return;
-            }
-            //тут визиваєм f з аргументами даними при визові???
-            f.apply(saveThis, saveArgs);
-            //тут присвоюємо undefined для того, що якщо не буде більше рухів зайти в умову
-            // if і закінчити
-            saveArgs = undefined;
-            //тут сама себе визиває fGo щоб затримати час(тільки не розумію коли є вихід з взаємного циклу)?????
-            setTimeout(fGo, ms);
-            //присвоєння true щоб дати зрозуміти що це не перший визов
-            bTimer = true;
-        }
     }
+
+    func.apply(this, arguments); // (1)
+
+    isThrottled = true;
+
+    setTimeout(function() {
+        isThrottled = false; // (3)
+        if (savedArgs) {
+            wrapper.apply(savedThis, savedArgs);
+            savedArgs = savedThis = null;
+        }
+    }, ms);
 }
 
+return wrapper;
+}
 
 // затормозить функцию до одного раза в 1000 мс
 var f1000 = throttle(f, 1000);
