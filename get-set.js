@@ -41,8 +41,10 @@ function User() {
 var user = new User();
 user.firstName("Петя");
 user.surname("Иванов");
+
 alert(user.firstName());
 alert(user.firstName("Петя", "Петя"));
+
 
 alert(user.getFullName()); // Петя Иванов
 
@@ -156,7 +158,9 @@ function CoffeeMachine(power, capacity) {
         waterAmount = amount;
     };
 
+
     this.getWaterAmount = function() {
+
         return waterAmount;
     };
     this.setOnReady = function(func) {
@@ -249,7 +253,9 @@ function CoffeeMachine(power, capacity) {
         }
     }
     this.isRunning = function() {
+
         return timerId == false ? false : true;
+
 
     };
     this.run = function() {
