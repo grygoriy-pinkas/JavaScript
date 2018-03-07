@@ -15,7 +15,7 @@ function User() {
     var firstName, surname;
 
     this.firstName = function(name) {
-        if (!arguments) {
+        if (arguments.length == 0) {
             return firstName;
         } else if (arguments.length == 1) {
             firstName = name;
@@ -24,7 +24,7 @@ function User() {
         }
     };
     this.surname = function(name) {
-        if (!arguments) {
+        if (arguments.length == 0) {
             return surname;
         } else if (arguments.length == 1) {
             surname = name;
