@@ -35,24 +35,28 @@ function Fridge() {
     var _food = [];
 
     this.addFood = function() {
-        if (this._enabled == false) {
-            //спочатку кидав ерори але воно зупиняє скрипт
-            //throw new Error("Refrigerator is out of order. It is impossible to add food");
-            console.log("Refrigerator is out of order. It is impossible to add food");
-        } else {
-            //console.log(MAX_CAUNT_UNITS);
-            var arg = [].slice.call(arguments);
-            // console.log(arguments);
-            arg.forEach(function(item, i) {
-                if (_food.length + arg.length < MAX_CAUNT_UNITS) {
-                    _food.push(item);
-                    //console.log(_food);
-                } else {
-                    //throw new Error("It's unpossible. Will be to mach foods");
-                    console.log("It's unpossible. Will be to mach foods");
-                    return;
-                }
-            });
+        try {
+            if (this._enabled == false) {
+                //спочатку кидав ерори але воно зупиняє скрипт
+                throw new Error("Refrigerator is out of order. It is impossible to add food.");
+                //console.log("Refrigerator is out of order. It is impossible to add food");
+            } else {
+                //console.log(MAX_CAUNT_UNITS);
+                var arg = [].slice.call(arguments);
+                // console.log(arguments);
+                arg.forEach(function(item, i) {
+                    if (_food.length + arg.length < MAX_CAUNT_UNITS) {
+                        _food.push(item);
+                        //console.log(_food);
+                    } else {
+                        throw new Error("It's unpossible. Will be to mach foods");
+                        //console.log("It's unpossible. Will be to mach foods.");
+                        return;
+                    }
+                });
+            }
+        } catch (e) {
+            console.log("You have a problem. " + e.message + " Try again.");
         }
     }
 
@@ -95,7 +99,7 @@ fridge.enable();
 fridge.addFood("котлета");
 fridge.addFood("сок", "зелень");
 fridge.addFood("варенье", "пирог", "торт");
-// ошибка, слишком много 
+// ошибка, слишком много
 ___________________________________________________________
 
 Добавьте методы в холодильник
