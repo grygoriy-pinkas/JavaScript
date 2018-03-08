@@ -57,16 +57,35 @@ console.log(table.money == undefined); //true
 
 
 /* options содержит настройки меню: width, height и т.п. */
+//їхній код розвязку
 function Menu(options) {
-    ...
+    options = Object.create(options); //тут створюють новий обєкт з прототипом options, але з такою самою
+    //назвою щоб посилання співпадали і шукалися спочатку вдома а потім в прототипа?
+    options.width = 300; //тут переоприділя.ть властивість
+
+    alert("width: " + options.width); // возьмёт width из наследника
+    alert("height: " + options.height); // возьмёт height из исходного объекта
 }
+
+var options = {
+    width: 100,
+    height: 200
+};
+
+var menu = new Menu(options);
+
+alert("original width: " + options.width); // width исходного объекта
+alert("original height: " + options.height);
+
+//кінець їхнього коду
+
 
 function Menu(options) {
     //так я бачив, а в розвязку створили обєкт, наслідуваний від object
-    var values = Object.create(options);
+    var options = Object.create(options);
     values.__proto__.options = options;
     options.width = options.width || 300; // по умолчанию ширина 300
-    ...
+
 }
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 Встроенные "классы"
