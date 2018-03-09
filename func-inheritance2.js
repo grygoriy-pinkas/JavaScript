@@ -61,11 +61,11 @@ function Fridge() {
     }
 
     this.getFood = function() {
-        return _food.length == 0 ? console.log("Refrigerator is empty") : console.log(_food);
-        // if(_food.length == 0){
-        //     console.log("Refrigerator is empty");
-        // } else {
-        // return console.log(_food);
+        //return _food.length == 0 ? console.log("Refrigerator is empty") : console.log(_food);
+        _food.length == 0 ? console.log("Refrigerator is empty") : console.log(_food.length);
+
+
+        return _food;
     }
 
 }
@@ -148,12 +148,13 @@ function Fridge() {
 
     };
     this.removeFood = function(name) {
-        _food.forEach(function(item, i) {
+        return _food.filter(function(item, i) {
             if (_food[i].title == name.title) {
                 _food.splice(i, 1);
             }
         });
     };
+
     //а так в розвязку, я забув про indexOf
     // this.removeFood = function(item) {
     //     var idx = food.indexOf(item);
@@ -252,9 +253,11 @@ function Fridge() {
         //єдиний вихід включити знову. чи є якийсь спосіб заборонити виключати звідси
         //в відповіді стрічку нижче не визивають, а кидають помилку, або визивають батьківський метод 
         // в середині свого
-        parentDisable.call(this);
+
         console.log(this._enabled); //of
         if (_food.length != 0) {
+            //перемістив сюди
+            parentDisable.call(this);
             console.log(this._enabled); //of
             console.log("Refregerator isn't empty");
             this._enabled = true;
