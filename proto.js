@@ -80,13 +80,6 @@ alert("original height: " + options.height);
 //кінець їхнього коду
 
 
-function Menu(options) {
-    //так я бачив, а в розвязку створили обєкт, наслідуваний від object
-    var options = Object.create(options);
-    values.__proto__.options = options;
-    options.width = options.width || 300; // по умолчанию ширина 300
-
-}
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 Встроенные "классы"
 в JavaScript
