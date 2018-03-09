@@ -18,21 +18,27 @@ prototype
 var head = {
     glasses: 1
 };
+
 table.__proto__ = head;
 var table = {
     pen: 3
 };
 bed.__proto__ = table;
+
 var bed = {
     sheet: 1,
     pillow: 2
 };
+
 pockets.__proto__ = bed;
+
 var pockets = {
     money: 2000
 };
 //це моя реалізація, і при цьому console.log(pockets.pen == 3) виводить falseю чому?
 //в розвяку прототипи розставлені окремо. 
+
+
 
 
 console.log(pockets.pen == 3); //false
@@ -57,6 +63,18 @@ console.log(table.money == undefined); //true
 
 
 /* options содержит настройки меню: width, height и т.п. */
+
+function Menu(options) {
+    ...
+}
+
+function Menu(options) {
+    //так я бачив, а в розвязку створили обєкт, наслідуваний від object
+    var values = Object.create(settings);
+    values.__proto__.options = options;
+    options.width = options.width || 300; // по умолчанию ширина 300
+    ...
+
 //їхній код розвязку
 function Menu(options) {
     options = Object.create(options); //тут створюють новий обєкт з прототипом options, але з такою самою
@@ -80,6 +98,7 @@ alert("original height: " + options.height);
 //кінець їхнього коду
 
 
+
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 Встроенные "классы"
 в JavaScript
@@ -90,7 +109,9 @@ alert("original height: " + options.height);
 
 //потім додивився що в розвязку ставиться не Object а Function. це погано
 //бо бачитимуть його всі обєкти а не тільки функції???
+
 Function.prototype.defer = function(ms) {
+
     setTimeout(this, ms);
 }
 
@@ -118,12 +139,14 @@ Object.prototype.defer = function(ms) {
 //там використовуються перемінні, смисл прямий яких я бачу, а от суті для чого вони застосовуються
 //не можу зрозуміти. поясни ці моменти!!!
 Function.prototype.defer = function(ms) {
+
     var f = this; // це this відноситься до функції(методу) рядком вище ????
     return function() {
         var args = arguments,
             context = this; //це this відноситься до функції яку ми викликаємо з методом defer???
         setTimeout(function() {
             f.apply(context, args); //а тут звязуємо метод defer з функцією яку викликаємо і загортаємо в таймаут???
+
         }, ms);
     }
 }
