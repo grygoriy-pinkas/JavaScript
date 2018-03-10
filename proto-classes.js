@@ -35,8 +35,7 @@ var coffeeMachine = new CoffeeMachine(10000);
 coffeeMachine.setWaterAmount(50);
 coffeeMachine.run();
 
-coffeeMachine.waterAmount
-console.log(coffeeMachine.waterAmount);
+console.log(coffeeMachine._waterAmount);
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
@@ -105,17 +104,22 @@ function Clock(template) {
     this._timer = 0;
 
     //чому нрядок нижче не працює
-    // і відповідно this.template.replace не працює
     //this.template = template.template;
     template = template.template;
     //цей метод в прототип не виносити?
     this.render = function() {
-        var time = Date.now();
-        var str = new Date(time).toISOString();
-        var date = str.substr(11, 2) + '.' + str.substr(14, 2) + '.' + str.substr(17, 2);
-        var h = str.substr(11, 2);
-        var m = str.substr(14, 2);
-        var s = str.substr(17, 2);
+        var time = new Date();
+        // var str = new Date(time).toISOString();
+        // var date = str.substr(11, 2) + '.' + str.substr(14, 2) + '.' + str.substr(17, 2);
+        // var h = str.substr(11, 2);
+        // var m = str.substr(14, 2);
+        // var s = str.substr(17, 2);
+        var h = time.getHours();
+        if (h < 10) h = '0' + h;
+        var m = time.getMinutes();
+        if (m < 10) m = '0' + m;
+        var s = time.getSeconds();
+        if (s < 10) s = '0' + s;
         //тут з виводом сильно не заморочувався
         //рядок нижче підглянув у відповіді, до в мене виходив громіздкий код
         var output = template.replace('h', h).replace('m', m).replace('s', s);
@@ -157,44 +161,22 @@ clock.start();
 function Clock(options) {
     this._timer = 0;
     this.template = options.template;
-    // console.log(typeof this.template);
-    // console.log(this.template);
 }
 
 Clock.prototype.render = function() {
     //console.log(this.template);
-    var time = Date.now();
-    var str = new Date(time).toISOString();
-    var date = str.substr(11, 2) + '.' + str.substr(14, 2) + '.' + str.substr(17, 2);
-    var h = str.substr(11, 2);
-    var m = str.substr(14, 2);
-    var s = str.substr(17, 2);
-    //тут з виводом сильно не заморочувався
-    //рядок нижче підглянув у відповіді, до в мене виходив громіздкий код
-    //оце this не працювало
+    var time = new Date();
+
+    var h = time.getHours();
+    if (h < 10) h = '0' + h;
+    var m = time.getMinutes();
+    if (m < 10) m = '0' + m;
+    var s = time.getSeconds();
+    if (s < 10) s = '0' + s;
     var output = this.template.replace('h', h).replace('m', m).replace('s', s);
 
     console.log(output);
 }
-
-Clock.prototype.start = function() {
-    //старт місив взяти з розвязку попередньої задачі
-    //рядок нижче я закоментував, без нього працює, не розумію для чого він тут
-    //this.render();
-    //також не розумів чого не працювало бе запису контексту в змінну
-    //спробую пояснити а ти підтвердиш
-    //це this відноситься до поточного обєкту, а функція яка викликається в середині інтервалу
-    //має свій контекст(тобто він втрачається припередачі в іншу область видимості)??????????
-    var self = this;
-    this._timer = setInterval(function() {
-        self.render();
-    }, 1000);
-}
-Clock.prototype.stop = function() {
-        clearInterval(this._time);
-    }
-    //child
-
 
 function ExtClock(options) {
     this.precision = +options.precision || 1000;
@@ -205,9 +187,7 @@ ExtClock.prototype = Object.create(Clock.prototype);
 ExtClock.prototype.constructor = ExtClock;
 
 ExtClock.prototype.start = function() {
-    //я спочатку так зробив. в мене тікало щосекунди, я це взяв з урока
-    //Clock.prototype.start.apply(this, arguments);
-    this.render(); //зрозумів для чого рендер тут
+    this.render();
     var self = this;
     this._timer = setInterval(function() {
         self.render();
@@ -216,7 +196,6 @@ ExtClock.prototype.start = function() {
 
 
 var clock2 = new ExtClock({ template: 'h:m:s', precision: 10000 });
-console.log(clock2);
 
 clock2.start();
 
@@ -255,15 +234,14 @@ Menu.prototype.close = function() {
     this.STATE_CLOSED = true;
 }
 
-function AnimatingMenu() {
-    this.anime;
-    Menu.apply(this, arguments);
-    this.STATE_ANIMATING;
-}
-
-
 AnimatingMenu.prototype = Object.create(Menu.prototype);
 AnimatingMenu.prototype.constructor = AnimatingMenu;
+
+function AnimatingMenu() {
+    this.anime = false;
+    Menu.apply(this);
+    this.STATE_ANIMATING;
+}
 
 AnimatingMenu.prototype.showState = function() {
     if (this.STATE_ANIMATING) {
@@ -280,15 +258,25 @@ AnimatingMenu.prototype.open = function() {
     this.STATE_ANIMATING = true;
     this.showState();
     this.anime = setTimeout(function() {
-        Menu.prototype.open.apply(this, arguments);
+        Menu.prototype.open.apply(this);
     }, 1000);
 }
 
 AnimatingMenu.prototype.close = function() {
     clearTimeout(this.anime);
-    Menu.prototype.close.apply(this, arguments);
+    Menu.prototype.close.apply(this);
 }
 
 var menu = new AnimatingMenu();
+
 console.log(menu);
+menu.showState(); // закрыто
+
 menu.open();
+menu.showState(); // анимация
+
+
+menu.showState(); // открыто
+
+menu.close();
+menu.showState();
