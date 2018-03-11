@@ -72,22 +72,8 @@ speedy.found("орех");
 
 alert(speedy.food.length); // 2
 alert(lazy.food.length); // 2 (!??)
-===
-===
-===
-===
-===
-===
-===
-===
-===
-===
-===
-===
-===
-===
-===
-===
+
+
 ===
 
 Класс "часы"
@@ -109,11 +95,6 @@ function Clock(template) {
     //цей метод в прототип не виносити?
     this.render = function() {
         var time = new Date();
-        // var str = new Date(time).toISOString();
-        // var date = str.substr(11, 2) + '.' + str.substr(14, 2) + '.' + str.substr(17, 2);
-        // var h = str.substr(11, 2);
-        // var m = str.substr(14, 2);
-        // var s = str.substr(17, 2);
         var h = time.getHours();
         if (h < 10) h = '0' + h;
         var m = time.getMinutes();
@@ -199,12 +180,7 @@ var clock2 = new ExtClock({ template: 'h:m:s', precision: 10000 });
 
 clock2.start();
 
-===
-===
-===
-===
-===
-===
+
 ===
 ===
 
@@ -219,34 +195,30 @@ clock2.start();
 // Вызов close() при необходимости отменяет таймер анимации (назначаемый в open) и передаёт вызов родительскому 
 // close.
 // Метод showState для нового состояния выводит "анимация", для остальных – полагается на родителя.
-
 function Menu() {
-    this.STATE_OPEN;
-    this.STATE_CLOSED;
+    this.state = 'STATE_CLOSED';
+
 }
 
 Menu.prototype.open = function() {
-    this.STATE_OPEN = true;
-    this.STATE_CLOSED = false;
+    this.state = 'STATE_OPEN';
 }
 Menu.prototype.close = function() {
-    this.STATE_OPEN = false;
-    this.STATE_CLOSED = true;
+    this.state = 'STATE_CLOSED';
 }
 
 AnimatingMenu.prototype = Object.create(Menu.prototype);
 AnimatingMenu.prototype.constructor = AnimatingMenu;
 
 function AnimatingMenu() {
-    this.anime = false;
+    this.state = 'STATE_ANIMATING';
     Menu.apply(this);
-    this.STATE_ANIMATING;
 }
 
 AnimatingMenu.prototype.showState = function() {
-    if (this.STATE_ANIMATING) {
+    if (this.state == 'STATE_ANIMATING') {
         alert("animation");
-    } else if (this.STATE_OPEN) {
+    } else if (this.state == 'STATE_OPEN') {
         alert("Open")
     } else {
         alert("Close");
@@ -255,10 +227,10 @@ AnimatingMenu.prototype.showState = function() {
 }
 
 AnimatingMenu.prototype.open = function() {
-    this.STATE_ANIMATING = true;
-    this.showState();
+    this.state = 'STATE_ANIMATING';
+    var self = this;
     this.anime = setTimeout(function() {
-        Menu.prototype.open.apply(this);
+        Menu.prototype.open.call(self);
     }, 1000);
 }
 
@@ -269,14 +241,54 @@ AnimatingMenu.prototype.close = function() {
 
 var menu = new AnimatingMenu();
 
-console.log(menu);
+
+var menu = new AnimatingMenu();
+
 menu.showState(); // закрыто
 
 menu.open();
 menu.showState(); // анимация
 
+setTimeout(function() { // через 1 секунду
+    menu.showState(); // открыто
 
-menu.showState(); // открыто
+    menu.close();
+    menu.showState(); // закрыто
+}, 1000);
 
-menu.close();
-menu.showState();
+===
+=== === === === === === === =
+
+//це годинник з правильно(надіюсь) переданим контекстом
+function Clock(template) {
+    this._timer = 0;
+    this.template = template.template;
+
+    this.render = function() {
+
+        var time = new Date();
+        var h = time.getHours();
+        if (h < 10) h = '0' + h;
+        var m = time.getMinutes();
+        if (m < 10) m = '0' + m;
+        var s = time.getSeconds();
+        if (s < 10) s = '0' + s;
+
+        var output = this.template.replace('h', h).replace('m', m).replace('s', s);
+
+        console.log(output);
+    }
+
+}
+
+Clock.prototype.start = function() {
+    var set = this;
+    this.timer = setInterval(function() {
+        set.render();
+    }, 1000);
+}
+
+var clock = new Clock({ template: 'h:m:s' });
+//clock.render();
+
+clock.start();
