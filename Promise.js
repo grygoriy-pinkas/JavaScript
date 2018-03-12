@@ -62,6 +62,25 @@ delay(1000)
 //   .then(alert);
 // В этой задаче загрузку нужно реализовать последовательно.
 
+//при такому коді статус pending
+// let urls = [
+//     'user.json',
+//     'guest.json'
+// ];
+
+// var result = [];
+
+// //тут я явно до кінця не розумію як це має відбуватись.
+// var proces = new Promise((resolve, reject) => {
+//     return result = urls.forEach((item, i) => {
+//         result.push[item];
+//     });
+// })
+// proces.then(console.log(result));
+
+//код нижче таке виводить, ніби проміс в очікуванні
+// Promise {<pending>}__proto__: Promise[[PromiseStatus]]: "pending"[[PromiseValue]]: undefined
+
 let urls = [
     'user.json',
     'guest.json'
@@ -71,12 +90,43 @@ var result = [];
 
 //тут я явно до кінця не розумію як це має відбуватись.
 var proces = new Promise((resolve, reject) => {
-    return result = urls.reduce((curent, item, i) => {
+    return result = urls.forEach((item, i) => {
         result.push[item];
-    }, 0);
+    });
 })
 proces.then(console.log(result));
 
-
 // в коментах побачив код з визовом .then
 //після звичайної функції, таке можливо?
+
+//в коді нижче статус проміса в консолі - resolved. так як нічо не грузив то value - undefined
+// Promise {<resolved>: undefined}
+// __proto__
+// :
+// Promise
+// [[PromiseStatus]]
+// :
+// "resolved"
+// [[PromiseValue]]
+// :
+// undefined
+//
+let urls = [
+    'user.json',
+    'guest.json'
+];
+
+var result = [];
+
+//тут я явно до кінця не розумію як це має відбуватись.
+var proces = new Promise((resolve, reject) => {
+    return result = urls.forEach((item, i) => {
+        if (true) {
+            resolve(result.push[item]);
+        } else {
+            var error = new Error("(((((((((((");
+            reject(error);
+        }
+    });
+})
+proces.then(console.log(result));
