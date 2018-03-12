@@ -34,7 +34,6 @@ var pockets = {
 //це моя реалізація, і при цьому console.log(pockets.pen == 3) виводить falseю чому?
 //в розвяку прототипи розставлені окремо. 
 
-
 console.log(pockets.pen == 3); //false
 console.log(pockets, pen); //pen is not defined
 console.log(bed.glasses == 1); //true
