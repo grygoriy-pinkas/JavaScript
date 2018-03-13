@@ -26,21 +26,17 @@ Promise
     function delay(ms) {
 
         return new Promise(function(resolve, reject) {
-            //в рядку нижче ()=>{} це анонімна функція?????
-            //і через стрілку вона не має свого контексту????????????????????
             setTimeout(() => {
-                //цей resolve викликається для успішного закінчення виконання без аргументів
-                //якщо було б resolve('result') то в рядку $1 було б result => alert("Hello!")??????????????????
                 resolve();
             }, ms)
         })
     }
-
+    //alert(result) не розумію з чим і де викликати
 
 delay(1000)
     //$1
     .then(() => alert("Hello!"));
-//в розвязку resolve не обгортали в анонім
+
 -- -- -- -- -- -- -- -
 
 
@@ -62,71 +58,64 @@ delay(1000)
 //   .then(alert);
 // В этой задаче загрузку нужно реализовать последовательно.
 
-//при такому коді статус pending
-// let urls = [
-//     'user.json',
-//     'guest.json'
-// ];
 
-// var result = [];
 
-// //тут я явно до кінця не розумію як це має відбуватись.
-// var proces = new Promise((resolve, reject) => {
-//     return result = urls.forEach((item, i) => {
-//         result.push[item];
-//     });
-// })
-// proces.then(console.log(result));
-
-//код нижче таке виводить, ніби проміс в очікуванні
-// Promise {<pending>}__proto__: Promise[[PromiseStatus]]: "pending"[[PromiseValue]]: undefined
-
+//сам  не зміг це вирішити
 let urls = [
     'user.json',
     'guest.json'
 ];
 
+function httpGet(url) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, false); // false for synchronous request
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+}
 var result = [];
+//це приклад з коментів з reduce
 
-//тут я явно до кінця не розумію як це має відбуватись.
-var proces = new Promise((resolve, reject) => {
-    return result = urls.forEach((item, i) => {
-        result.push[item];
-    });
-})
-proces.then(console.log(result));
+urls
+    .reduce((chain, current) => chain
+        //не розумію що тут "x" означає
+        .then(x => httpGet(current))
+        .then(x => results.push(x)),
+        Promise.resolve())
+    //тут викликається then на результат reduse????????
+    .then(x => alert(results));
+//але тут в результаті помилка Uncaught (in promise) ReferenceError: results is not defined
 
-// в коментах побачив код з визовом .then
-//після звичайної функції, таке можливо?
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
-//в коді нижче статус проміса в консолі - resolved. так як нічо не грузив то value - undefined
-// Promise {<resolved>: undefined}
-// __proto__
-// :
-// Promise
-// [[PromiseStatus]]
-// :
-// "resolved"
-// [[PromiseValue]]
-// :
-// undefined
-//
+
+// resolving from site
+//виявляється пустий вирішений проміс можна записати в змінну
 let urls = [
     'user.json',
     'guest.json'
 ];
 
-var result = [];
+function httpGet(url) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, false); // false for synchronous request
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+}
 
-//тут я явно до кінця не розумію як це має відбуватись.
-var proces = new Promise((resolve, reject) => {
-    return result = urls.forEach((item, i) => {
-        if (true) {
-            resolve(result.push[item]);
-        } else {
-            var error = new Error("(((((((((((");
-            reject(error);
-        }
-    });
-})
-proces.then(console.log(result));
+let chain = Promise.resolve();
+
+let results = [];
+
+// в цикле добавляем задачи в цепочку
+urls.forEach(function(url) {
+    chain = chain
+        .then(() => httpGet(url))
+        .then((result) => {
+            results.push(result);
+        });
+});
+
+// в конце — выводим результаты
+chain.then(() => {
+    alert(results);
+});
