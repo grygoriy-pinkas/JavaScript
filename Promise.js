@@ -26,14 +26,11 @@ Promise
     function delay(ms) {
 
         return new Promise(function(resolve, reject) {
-            setTimeout(() => {
-                resolve();
-            }, ms)
+            setTimeout(resolve, ms);
         })
     }
-    //alert(result) не розумію з чим і де викликати
 
-delay(1000)
+delay(3000)
     //$1
     .then(() => alert("Hello!"));
 
@@ -67,10 +64,29 @@ let urls = [
 ];
 
 function httpGet(url) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", url, false); // false for synchronous request
-    xmlHttp.send(null);
-    return xmlHttp.responseText;
+
+    return new Promise(function(resolve, reject) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+
+        xhr.onload = function() {
+            if (this.status == 200) {
+                resolve(this.response);
+            } else {
+                var error = new Error(this.statusText);
+                error.code = this.status;
+                reject(error);
+            }
+        };
+
+        xhr.onerror = function() {
+            reject(new Error("Network Error"));
+        };
+
+        xhr.send();
+    });
+
 }
 var result = [];
 //це приклад з коментів з reduce
@@ -78,7 +94,7 @@ var result = [];
 urls
     .reduce((chain, current) => chain
         //не розумію що тут "x" означає
-        .then(x => httpGet(current))
+        .then(() => httpGet(current))
         .then(x => results.push(x)),
         Promise.resolve())
     //тут викликається then на результат reduse????????
@@ -90,16 +106,36 @@ urls
 
 // resolving from site
 //виявляється пустий вирішений проміс можна записати в змінну
+
 let urls = [
     'user.json',
     'guest.json'
 ];
 
 function httpGet(url) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", url, false); // false for synchronous request
-    xmlHttp.send(null);
-    return xmlHttp.responseText;
+
+    return new Promise(function(resolve, reject) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+
+        xhr.onload = function() {
+            if (this.status == 200) {
+                resolve(this.response);
+            } else {
+                var error = new Error(this.statusText);
+                error.code = this.status;
+                reject(error);
+            }
+        };
+
+        xhr.onerror = function() {
+            reject(new Error("Network Error"));
+        };
+
+        xhr.send();
+    });
+
 }
 
 let chain = Promise.resolve();
@@ -117,5 +153,5 @@ urls.forEach(function(url) {
 
 // в конце — выводим результаты
 chain.then(() => {
-    alert(results);
+    alert(result);
 });
