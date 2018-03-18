@@ -58,9 +58,10 @@ delay(3000)
 
 
 //сам  не зміг це вирішити
+
 let urls = [
-    'user.json',
-    'guest.json'
+    'https://httpbin.org/ip',
+    'https://httpbin.org/user-agent'
 ];
 
 function httpGet(url) {
@@ -88,7 +89,7 @@ function httpGet(url) {
     });
 
 }
-var result = [];
+var results = [];
 //це приклад з коментів з reduce
 
 urls
@@ -108,8 +109,8 @@ urls
 //виявляється пустий вирішений проміс можна записати в змінну
 
 let urls = [
-    'user.json',
-    'guest.json'
+    'https://httpbin.org/ip',
+    'https://httpbin.org/user-agent'
 ];
 
 function httpGet(url) {
@@ -153,5 +154,5 @@ urls.forEach(function(url) {
 
 // в конце — выводим результаты
 chain.then(() => {
-    alert(result);
+    alert(results);
 });
