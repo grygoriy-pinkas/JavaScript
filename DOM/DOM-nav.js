@@ -68,9 +68,7 @@ if (elem.childNodes.length == null) { узел elem пуст }
 
 if (!elem.childNodes.length) {... }
 
-if (!elem.firstChild) {... }
 
-if (!elem.lastChild) {... }
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
 
@@ -84,8 +82,6 @@ var table = document.body.children[0];
 
 table.rows[].style.backgroundColor = 'red';
 
-
-table.rows[].style.backgroundColor = 'red';
 
 //з експерементів -  чому такий таймаут не працює????
 // for (let index = 0; index < table.rows.length; index++) {
