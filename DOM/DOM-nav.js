@@ -63,8 +63,16 @@ console.log(document.body.children[1].children[1]);
 
 //я спочатку так зробив
 // if (elem.children == null) { узел elem пуст }
-if (elem.children.length == null) { узел elem пуст }
+if (elem.childNodes.length == null) { узел elem пуст }
+
+
+if (!elem.childNodes.length) {... }
+
+if (!elem.firstChild) {... }
+
+if (!elem.lastChild) {... }
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+
 
 Напишите код, который выделит все ячейки в таблице по диагонали.
 
@@ -90,8 +98,7 @@ table.rows[].style.backgroundColor = 'red';
 //проба на роботоздатність
 //table.rows[3].cells[2].style.backgroundColor = 'red';
 
-var k = 0;
+
 for (let index = 0; index < table.rows.length; index++) {
-    table.rows[index].cells[k].style.backgroundColor = 'red';
-    k++;
+    table.rows[index].cells[index].style.backgroundColor = 'red';
 }
