@@ -74,18 +74,10 @@ document.querySelector('form[name="search-person"] [name="info[0]"]');
 //щодо астосування рекурсії - то явпевнений. також пробував застосовувати innerHTML. результат той самий - на 
 // найглибших вкладеннях працює коректно, а вище виводить код цілого вузла. до речі про ці методи нічо не 
 //було сказано в уроці. мусив вишуковувати
-var element = document.body.getElementsByTagName('li');
 
-function render(elem) {
-    for (let index = 0; index < elem.length; index++) {
-        if (elem[index].firstChild != null) {
-            alert(elem[index].textContent[0]);
-        } else {
-            render(elem.firstChild);
-        }
-    }
+var elem = document.body.getElementsByTagName('li');
+
+for (let index = 0; index < elem.length; index++) {
+    var count = elem[index].getElementsByTagName('li');
+    alert(elem[index].firstChild.textContent + ': ' + count.length);
 }
-
-render(element);
-
--- -- -- -- -- -- -- -- -- -- --
