@@ -7,15 +7,13 @@ poliifil
 // Element.prototype.msMatchesSelector (старый IE).
 
 // Создайте полифилл, который гарантирует стандартный синтаксис elem.matches(css) для всех браузеров.
-
+var matchesSelector, webkitMatchesSelector, mozMatchesSelector;
 var pol = document.documentElement.matches;
 if (pol === undefined) { // (1)
     var arr = [matchesSelector, webkitMatchesSelector, mozMatchesSelector];
     arr.forEach(function(item, i) {
-        if (document.documentElement.item) {
-            pol = document.documentElement.item;
-        } else {
-            pol = Element.prototype.msMatchesSelector;
+        if (document.documentElement[item]) {
+            document.documentElement.matches = Element.prototype.item;
         }
     });
 }
@@ -61,13 +59,20 @@ if (pol === undefined) { // (1)
 //  быть взаимозаменимы. Именно на них направлен полифилл.
 
 //мій варіант відрізняється від 
-if (document.documentElement.textContent === undefined) {
-    Element.prototype.textContent = Element.prototype.innerText;
-}
+    (function() {
 
-//пробував подивитися на правильність доступу до прототипа
-//цей варіант з помилкою Illegal invocation
-console.dir(Element.prototype.textContent);
+    // проверяем поддержку
+    if (document.documentElement.textContent === undefined) {
 
-//тут є список методів, в яких nextContent не має жодних властивостей
-console.dir(Element.prototype);
+        // определяем свойство
+        Object.defineProperty(HTMLElement.prototype, "textContent", {
+            get: function() {
+                return this.innerText;
+            },
+            set: function(value) {
+                this.innerText = value;
+            }
+        });
+    }
+
+})();
