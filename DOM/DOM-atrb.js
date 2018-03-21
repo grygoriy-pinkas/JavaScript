@@ -44,25 +44,17 @@ alert(data);
 // </ul>
 
 //тут ще так робив
-//var list = document.getElementsByTagName('a');
-var list = document.querySelector('a');
-//alert(list);
+var list = document.getElementsByTagName('a');
 
-for (var i = 0; i < list.length; i++) {
-    var text = list[i].getAttribute('href');
+for (let i = 0; i < list.length; i++) {
+    let link = list[i].getAttribute('href');
 
-    alert(typeof text);
+    //  alert(typeof list[i]);
+    //  alert(link.indexOf('http://'));
 
-    text.classList.add('external');
-    //щось не так в цьому рядку. як тільки застосовую indexOf, відразу скрипт ламається
-    //бачив розвязок. йшов  тим самим шляхом за винятком присвоєння класу
-    //але не можу довести до кінця це
-    var res = text.indexOf('://');
-    alert(res);
-
-    // if(text.indexOf('http://') == -1){
-    //     continue;
-    // } else{
-    //     list[i].classList.add('external'); 
-    // }
+    if (link.indexOf('http://') == -1) {
+        continue;
+    } else {
+        list[i].classList.add('external');
+    }
 }
