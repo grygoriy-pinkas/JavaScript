@@ -7,16 +7,20 @@ poliifil
 // Element.prototype.msMatchesSelector (старый IE).
 
 // Создайте полифилл, который гарантирует стандартный синтаксис elem.matches(css) для всех браузеров.
-var matchesSelector, webkitMatchesSelector, mozMatchesSelector;
-var pol = document.documentElement.matches;
-if (pol === undefined) { // (1)
-    var arr = [matchesSelector, webkitMatchesSelector, mozMatchesSelector];
-    arr.forEach(function(item, i) {
-        if (document.documentElement[item]) {
-            document.documentElement.matches = Element.prototype.item;
-        }
-    });
-}
+    (function() {
+    var pol = document.documentElement.matches;
+    if (pol === undefined) { // (1)
+        var arr = [document.documentElement.matchesSelector, document.documentElement.webkitMatchesSelector,
+            document.documentElement.mozMatchesSelector, document.documentElement.msMatchesSelector
+        ];
+        arr.forEach(function(item, i) {
+            if (item) {
+                //так можна? чи треба з прототипа копіювати?
+                Element.prototype.matches = item;
+            }
+        });
+    }
+})();
 -- -- -- -- -- -- -- -- -- -- -- --
 
 Полифилл для closest
@@ -29,14 +33,19 @@ if (pol === undefined) { // (1)
 //взяв з прикладу. трохи важко тут розбиратись зараз. тому не сильно вникаю
     (function() {
 
-    // проверяем поддержку
+    // якщо немає даного метода в прототипі
     if (!Element.prototype.closest) {
 
         // реализуем
         Element.prototype.closest = function(css) {
+            //тут присвоюється в змінну контекст який в виконуваній функції (element.closest) матиме значення
+            //element, тобто буде перевірятися поточний вузол. 
+            //а якщо цього не зробити то що буде?????
             var node = this;
 
             while (node) {
+                //тут порівнюється вузол з селектором на відповідність
+                //і якщо відповідає то не розумію чому повертається вузол, а якщо ні то родич.
                 if (node.matches(css)) return node;
                 else node = node.parentElement;
             }
