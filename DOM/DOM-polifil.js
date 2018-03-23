@@ -10,8 +10,10 @@ poliifil
     (function() {
     var pol = document.documentElement.matches;
     if (pol === undefined) { // (1)
-        var arr = [document.documentElement.matchesSelector, document.documentElement.webkitMatchesSelector,
-            document.documentElement.mozMatchesSelector, document.documentElement.msMatchesSelector
+        var arr = [Element.prototype.matchesSelector,
+            Element.prototype.webkitMatchesSelector,
+            Element.prototype.mozMatchesSelector,
+            Element.prototype.msMatchesSelector
         ];
         arr.forEach(function(item, i) {
             if (item) {
@@ -44,8 +46,6 @@ poliifil
             var node = this;
 
             while (node) {
-                //тут порівнюється вузол з селектором на відповідність
-                //і якщо відповідає то не розумію чому повертається вузол, а якщо ні то родич.
                 if (node.matches(css)) return node;
                 else node = node.parentElement;
             }
