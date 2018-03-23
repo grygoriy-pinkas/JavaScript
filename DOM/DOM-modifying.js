@@ -294,28 +294,158 @@ for (i = 0; i < lis.length; i++) {
 //зроблено
 
 
+// <!DOCTYPE HTML>
+// <html>
+
+// <head>
+//     <style>
+//         table {
+//             border-collapse: collapse;
+//         }
+
+//         td,
+//         th {
+//             border: 1px solid black;
+//             padding: 3px;
+//             text-align: center;
+//         }
+
+//         th {
+//             font-weight: bold;
+//             background-color: #E6E6E6;
+//         }
+//     </style>
+//     <meta charset="utf-8">
+// </head>
+
+// <body>
+
+
+//     <div id="calendar"></div>
+
+//     <script>
+
+//тут спочатку трохи робив, але задача складна, тому закінчував з їхнім кодом
 function createCalendar(id, year, month) {
     var table = '<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
 
     var element = document.getElementById(id);
     let date = new Date(year, month - 1);
-    let day = date.getDay();
+    // let day = date.getDay();
+    let mon = month - 1;
 
-    console.log(day);
-    for (let i = 0; i < day; i++) {
+    for (let i = 0; i < getDay(date); i++) {
         table += '<td></td>';
     }
+    while (date.getMonth() == mon) {
+        table += '<td>' + date.getDate() + '</td>';
 
+        if (getDay(date) % 7 == 6) {
+            table += '</tr><tr>';
+        }
+        date.setDate(date.getDate() + 1);
+    }
+    if (getDay(date) != 0) {
+        for (var i = getDay(date); i < 7; i++) {
+            table += '<td></td>';
+        }
+    }
     table += '</tr></table>';
 
-    // только одно присваивание innerHTML
     element.innerHTML = table;
 }
 
-createCalendar("cal", 2012, 9);
+function getDay(date) {
+    var day = date.getDay();
+    if (day == 0) day = 7;
+    return day - 1;
+}
+
+createCalendar("calendar", 2012, 9);
+//     </script>
+// </body>
+
+// </html>
 
 -- -- -- -- -- -- -- -- -- -- -- -- --
 
 
 Часики с использованием "setInterval"
 важность: 4
+
+// <!DOCTYPE HTML>
+// <html>
+
+// <head>
+//     <meta charset="utf-8">
+//     <style>
+//         .red {
+//             color: red;
+//         }
+
+//         .yellow {
+//             color: yellow;
+//         }
+
+//         .green {
+//             color: green;
+//         }
+//     </style>
+// </head>
+
+// <body>
+//     <div id="clock">
+//         <span class="red"></span>:<span class="yellow"></span>:<span class="green"></span>
+//     </div>
+
+//     <input type="button" onclick="clockStart()" value="Start">
+
+//     <input type="button" onclick="clockStop()" value="Stop">
+
+
+
+//     <script>
+render = function() {
+    var time = new Date();
+    var h = time.getHours();
+    if (h < 10) h = '0' + h;
+    var m = time.getMinutes();
+    if (m < 10) m = '0' + m;
+    var s = time.getSeconds();
+    if (s < 10) s = '0' + s;
+
+    var element = document.getElementById('clock');
+    element.children[0].innerHTML = h;
+    element.children[1].innerHTML = m;
+    element.children[2].innerHTML = s;
+
+    //наступні два рядки для запитання. чому працює другий таймІнтервал. яким чином розпаковується масив. може я щось 
+    //призабув
+    var output = [h, m, s];
+    return output;
+
+}
+
+var timerId;
+
+function clockStart() {
+    timerId = setInterval(render, 1000);
+
+    setInterval(() => {
+        test.textContent = render();
+    }, 1000);
+}
+
+//зараз не працює бо є інший інтервал
+function clockStop() {
+    clearInterval(timerId);
+    timerId = null;
+}
+//це теж до питання відноситься
+var test = document.createElement('div');
+document.body.appendChild(test);
+//     </script>
+
+// </body>
+
+// </html>
