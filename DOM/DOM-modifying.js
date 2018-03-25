@@ -205,8 +205,9 @@ function tree(container, data) {
 
     var indent = ' ';
     var ul = document.createElement('ul');
-    container.appendChild(ul);
-
+    if (Object.keys(data).length != 0) {
+        container.appendChild(ul);
+    }
     for (let value in data) {
 
         let li = document.createElement('li');
