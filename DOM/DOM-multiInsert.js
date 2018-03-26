@@ -104,8 +104,6 @@ function sort2() {
     }
 
     rows.sort(function(a, b) {
-        //бачу цей метод дуже часто використовується, а я майже до нього не звертаюсь
-        console.log(a.lastChild.innerHTML);
         return a.lastChild.innerHTML - b.lastChild.innerHTML;
     })
 
