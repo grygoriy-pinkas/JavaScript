@@ -168,3 +168,85 @@ ball.style.top = fieldCentreHeight + 'px';
 // </body>
 
 // </html>
+
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+
+Расширить элемент
+// важность: 4
+// В < body > есть элемент < div > с заданной шириной width.
+
+// Задача– написать код, который« распахнет» < div > по ширине на всю страницу.
+
+// Исходный документ( < div > содержит текст и прокрутку):
+
+
+//     P.S.Пользоваться следует исключительно средствами JS, CSS в этой задаче менять нельзя.Также ваш код должен
+// быть универсален и не ломаться, если цифры в CSS станут другими.
+
+// P.P.S.При расширении элемент < div > не должен вылезти за границу < body > 
+
+// <!DOCTYPE HTML>
+// <html>
+
+// <head>
+//     <meta charset="utf-8">
+//     <style>
+//         #elem {
+//             width: 200px;
+//             height: 150px;
+//             background-color: red;
+//             padding: 20px;
+//             overflow: auto;
+//         }
+
+//         body {
+//             border: 1px solid black;
+//         }
+//     </style>
+// </head>
+
+// <body>
+
+//     <div id="elem">
+//         текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст
+//         текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст
+//         текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст
+//         текст текст текст текст
+//     </div>
+
+//     <script>
+function minusPX(value) {
+    //var value = '' + value;
+    let [elem, prop] = value.split('.');
+    console.log(typeof elem);
+    console.log(prop);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //незнаю як тут перетворити із рядків в назву змінних. таке взагалі можливо????????????
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    let preRes = getComputedStyle(elem).prop;
+    let res = +value.slice(0, value.length - 2);
+    return res;
+}
+var elem = document.getElementById("elem");
+var scroll = elem.offsetWidth - elem.clientWidth;
+
+var body = document.body;
+var bodyWidth = body.offsetWidth
+
+//ненаю як оприділити чи потрібен скрол чи ні?
+var newContentWidth = bodyWidth - minusPX('elem.paddingLeft');
+
+elem.style.width = newContentWidth + 'px';
+
+console.log(newContentWidth);
+// console.log(elem.offsetWidth);
+// console.log(elem.style.width);
+console.log(typeof minusPX('elem.paddingLeft'));
+console.log(elem.paddingRight);
+
+//         </script>
+
+
+// </body>
+
+// </html>
