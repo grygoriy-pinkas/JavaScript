@@ -93,40 +93,29 @@ button.style.cssText = `-moz-border-radius: 8px;
 // <body>
 
 //     <script>
-//я зробив інакше ніж в розвязку. в мене не створюється кожен раз елемент а тільки міняється властивість css
-//просто тут вийшло не зовсім асинхронно. мабуть проміси тут можна застосувати.
-var i = 0;
 
 function showNotification(options) {
-    var div = document.createElement('div');
-    var row = document.createElement('p');
+    //return function to use it in setInterval(function, precision)
+    return () => {
+        var div = document.createElement('div');
+        var row = document.createElement('p');
 
-    row.className = options.className;
-    document.body.appendChild(div);
-    div.appendChild(row);
+        row.className = options.className;
+        document.body.appendChild(div);
+        div.appendChild(row);
 
-    let css = parceCss(options);
-    row.style.cssText = css;
-    row.innerHTML = options.html;
+        let css = parceCss(options);
+        row.style.cssText = css;
+        row.innerHTML = options.html;
 
-    row.style.display = "";
+        row.style.display = "";
 
-    console.log(i++);
-
-
-    setTimeout(() => {
-        console.log("close");
-        row.style.display = "none";
-    }, 1500);
+        setTimeout(() => {
+            row.style.display = "none";
+        }, 1500);
+    }
 }
 
-
-// showNotification({
-//     top: 10,
-//     right: 10,
-//     html: "Привет",
-//     className: "welcome"
-// });
 
 function parceCss(options) {
     var cssText = '"';
@@ -146,13 +135,14 @@ function parceCss(options) {
     return cssText;
 }
 
-//нерозумію чому цей інтервал не запускається періодично
+
 setInterval(showNotification({
     top: 10,
     right: 10,
     html: "Привет",
     className: "welcome"
 }), 2000);
+
 //     </script>
 
 // </body>
