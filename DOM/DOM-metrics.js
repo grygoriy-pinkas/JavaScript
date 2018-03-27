@@ -217,15 +217,12 @@ ball.style.top = fieldCentreHeight + 'px';
 //     <script>
 function minusPX(value) {
     //var value = '' + value;
+    var element = document.getElementById("elem");
     let [elem, prop] = value.split('.');
-    console.log(typeof elem);
-    console.log(prop);
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //незнаю як тут перетворити із рядків в назву змінних. таке взагалі можливо????????????
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    let preRes = getComputedStyle(elem).prop;
-    let res = +value.slice(0, value.length - 2);
-    return res;
+    let preRes = parseInt(getComputedStyle(element)[prop]);
+    console.log(preRes);
+
+    return preRes;
 }
 var elem = document.getElementById("elem");
 var scroll = elem.offsetWidth - elem.clientWidth;
@@ -233,16 +230,12 @@ var scroll = elem.offsetWidth - elem.clientWidth;
 var body = document.body;
 var bodyWidth = body.offsetWidth
 
-//ненаю як оприділити чи потрібен скрол чи ні?
-var newContentWidth = bodyWidth - minusPX('elem.paddingLeft');
+var border = parseInt(getComputedStyle(document.body).border);
+
+var newContentWidth = bodyWidth - minusPX('elem.paddingLeft') - minusPX('elem.paddingRight') -
+    2 * border;
 
 elem.style.width = newContentWidth + 'px';
-
-console.log(newContentWidth);
-// console.log(elem.offsetWidth);
-// console.log(elem.style.width);
-console.log(typeof minusPX('elem.paddingLeft'));
-console.log(elem.paddingRight);
 
 //         </script>
 
