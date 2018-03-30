@@ -43,11 +43,9 @@ function confirmation() {
     if (target.tagName == 'A' || target.tagName == 'I') {
 
         var agriment = confirm('Do you really want to visit ' + target.innerHTML + '?');
-        //чомусь не спрацьовує вертання false
-        //там в умові сказано про контентс, правда незнаю яким чином його тут причепити
-        if (agriment == 'false') return false;
-        //по ідеї мало б і так приводити до потрібного реультату
-        //return agriment;
+        if (!agriment) {
+            event.preventDefault();
+        };
     }
 }
 //     </script>
