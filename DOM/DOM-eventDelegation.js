@@ -44,57 +44,40 @@
 //             height: 24px;
 //             border: none;
 //             background: transparent;
+//             position: absolute;
+//             top: 5px;
+//             left: 440px;
 //         }
 //     </style>
 // </head>
 
 // <body>
-
-
-//     <button class="remove-button">[x]</button>
-
 //     <div id="shale">
 //         <div class="pane">
 //             <h3>Лошадь</h3>
 //             <p>Домашняя лошадь — животное семейства непарнокопытных, одомашненный и единственный сохранившийся подвид дикой лошади, вымершей в дикой природе, за исключением небольшой популяции лошади Пржевальского.</p>
+//             <button class="remove-button">[x]</button>
 //         </div>
 //         <div class="pane">
 //             <h3>Осёл</h3>
 //             <p>Домашний осёл или ишак — одомашненный подвид дикого осла, сыгравший важную историческую роль в развитии хозяйства и культуры человека. Все одомашненные ослы относятся к африканским ослам.</p>
+//             <button class="remove-button">[x]</button>
 //         </div>
 //         <div class="pane">
 //             <h3>Корова, а также пара слов о диком быке, о волах и о тёлках. </h3>
 //             <p>Коро́ва — самка домашнего быка, одомашненного подвида дикого быка, парнокопытного жвачного животного семейства полорогих. Самцы вида называются быками, молодняк — телятами, кастрированные самцы — волами. Молодых (до первой стельности) самок
 //                 называют тёлками.
 //             </p>
+//             <button class="remove-button">[x]</button>
 //         </div>
 //     </div>
 //     <script>
-var button = document.getElementsByClassName('remove-button')[0];
-var arr = document.getElementsByClassName('pane');
+document.addEventListener('click', hide);
 
-[].forEach.call(arr, function(item) {
-    var a = item.getBoundingClientRect();
-
-    item.insertAdjacentHTML("afterBegin", button.outerHTML);
-    let but = item.children[0];
-    //мусив змінити підхід до позиціонування елементів бо при видаленні поводили себе дивно
-    but.style.position = 'absolute';
-    but.style.top = '5px';
-    but.style.left = '440px';
-
-});
-//рішення для цієї задачки
-var shale = document.getElementById('shale');
-
-function Hide(elem) {
-    elem.onclick = function(e) {
-        var target = e.target.parentNode;
-        elem.removeChild(target);
-    }
+function hide() {
+    var target = event.target.parentNode;
+    target.remove();
 }
-new Hide(shale);
-
 //     </script>
 
 // </body>
@@ -113,19 +96,15 @@ new Hide(shale);
 // Клик вне текста заголовка (на пустом месте) ничего делать не должен.
 // При наведении на заголовок – он становится жирным, реализовать через CSS.
 // P.S. При необходимости HTML/CSS дерева можно изменить.
-
 // <!DOCTYPE HTML>
+
 // <html>
 
 // <head>
 //     <meta charset="utf-8">
 //     <style>
-//         .tree>li> :hover {
+//         .tree span:hover {
 //             font-weight: bold;
-//         }
-
-//         .tree>li>ul>li :hover {
-//             font-weight: normal;
 //         }
 //     </style>
 // </head>
@@ -186,30 +165,19 @@ for (var i = 0; i < treeLis.length; i++) {
     span.appendChild(span.nextSibling);
 }
 
-//я спочатку так зробив. але потым поглянув як підсвітити код і задіяти клік тільки на тексті
-//то прийшлось переробити 
-// function Hide(elem) {
-//     elem.onclick = function(e) {
-//         var target = e.target.children[0].children;
+console.log(container);
 
-//         [].forEach.call(target, function(item) {
-//             item.style.display = "none";
-//         });
-
-//     }
-// }
 function Hide(elem) {
     elem.onclick = function(e) {
-        var target = e;
-        if (target.tagName == 'span') {
+        var gol = e.target;
+        if (gol.tagName == 'SPAN') {
             var li = target.parentNode;
             var childrenContainer = li.getElementsByTagName('ul')[0];
+            console.log(li);
 
             if (!childrenContainer) return;
             childrenContainer.hidden = !childrenContainer.hidden;
-
         }
-
 
     }
 }
@@ -287,49 +255,46 @@ var table = document.getElementById('grid');
 
 var col;
 table.onclick = function(e) {
-    let target = e.target;
-    let type = target.getAttribute("data-type");
-    if (type == "number") col = 0;
-    if (type == "string") col = 1;
+        let target = e.target;
+        if (target.tagName != 'TH') {
+            return;
+        };
+        let col = target.cellIndex;
 
-
-    if (typeof type == 'object') {
-        return;
-    }
-
-    let elem = table.tBodies[0].children;
-    let arr = [];
-    [].forEach.call(elem, function(item) {
-        arr.push(item);
-    });
-
-    for (let i = elem.length - 1; i >= 0; i--) {
-        elem[i].remove();
-
-    }
-
-    arr.sort(function(a, b) {
-        if (col == 0) {
-            return a.children[col].innerHTML - b.children[col].innerHTML;
-        } else {
-            return a.children[col].innerHTML > b.children[col].innerHTML;
+        if (typeof type == 'object') {
+            return;
         }
 
-    });
 
-    arr.forEach(function(item, i) {
-        table.tBodies[0].appendChild(item);
-    })
+        let elements = table.tBodies[0].children;
+        let arr = [].slice.call(elements);
 
-    //перевірка правильності сортування масиву
-    var array = [];
-    arr.forEach(function(item) {
-            array.push(item.children[col].innerHTML);
+        for (let i = elements.length - 1; i >= 0; i--) {
+            elements[i].remove();
+
+        }
+
+        arr.sort(function(a, b) {
+            if (col == 0) {
+                return a.children[col].innerHTML - b.children[col].innerHTML;
+            } else {
+                return a.children[col].innerHTML > b.children[col].innerHTML;
+            }
+
+        });
+
+        arr.forEach(function(item, i) {
+            table.tBodies[0].appendChild(item);
         })
-        //console.log(array);
-}
 
-//     </script>
+        //перевірка правильності сортування масиву
+        var array = [];
+        arr.forEach(function(item) {
+                array.push(item.children[col].innerHTML);
+            })
+            //console.log(array);
+    }
+    //     </script>
 
 // </body>
 
