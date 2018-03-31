@@ -37,10 +37,10 @@
 //     <script>
 document.addEventListener('click', confirmation);
 
-function confirmation() {
+function confirmation(event) {
     var target = event.target;
 
-    if (target.tagName == 'A' || target.tagName == 'I') {
+    if (target.tagName == 'A' || target.parentNode.tagName == 'A') {
 
         var agriment = confirm('Do you really want to visit ' + target.innerHTML + '?');
         if (!agriment) {
@@ -131,27 +131,8 @@ function confirmation() {
 
 
 //     <script>
-document.addEventListener('click', commit);
-//тут нижче я мучився з повідомленням при наведенні, а то браузер сам ставить)))))РОЗВЕЛИ
-
-// document.addEventListener('mouseover', function() {
-//     var target = event.target;
-//     var thumbs = document.getElementById('thumbs');
-
-//     var div = document.createElement('div');
-//     document.body.appendChild(div);
-//     let map = target.getBoundingClientRect();
-//     div.style = `border: 1px solid silver;
-//     whidth: auto;
-//     heigth: auto;
-//     position: absolute;
-//     display: none;`
-//         // if (target.nodeName == "IMG") {
-//         //     div.style.top = map.top + 15 + 'px';
-//         //     div.style.left = map.left + 15 + 'px';
-//         // }
-
-// });
+var thumbs = document.getElementById('thumbs');
+thumbs.addEventListener('click', commit);
 
 function commit() {
     var target = event.target;
