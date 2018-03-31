@@ -23,12 +23,12 @@
 //             height: 150px;
 //             border: 10px groove black;
 //             background-color: #00FF00;
-//             position: absolute;
+//             position: relative;
 //             overflow: hidden;
 //         }
 
 //         #ball {
-//             position: relative;
+//             position: absolute;
 //             top: 50%;
 //             left: 50%;
 //             margin-left: -20px;
@@ -56,16 +56,16 @@ var corX, corY;
 var fieldStyle = getComputedStyle(field);
 
 field.onclick = function(event) {
-    //рахування радіусу мяча я не автоматизовував. надіюсь він не мінятиметься)
-    corX = event.clientX - 10 - field.offsetLeft;
-    corY = event.clientY - 10 - field.offsetTop;
+    //додав також бордер до розрахунків
+    corX = event.clientX - ball.clientWidth / 2 - field.offsetLeft + field.clientTop;
+    corY = event.clientY - ball.clientHeight / 2 - field.offsetTop + field.clientLeft;
+    console.log(ball.clientHeight);
 
-
-    if (corX > parseFloat(fieldStyle.width) - 20) {
-        corX = parseFloat(fieldStyle.width) - 20;
+    if (corX > parseInt(fieldStyle.width) - ball.clientWidth / 2) {
+        corX = parseInt(fieldStyle.width) - ball.clientWidth / 2;
     }
-    if (corY > parseFloat(fieldStyle.height) - 20) {
-        corY = parseFloat(fieldStyle.height) - 20;
+    if (corY > parseInt(fieldStyle.height) - ball.clientHeight / 2) {
+        corY = parseInt(fieldStyle.height) - ball.clientHeight / 2;
     }
     if (corX < 20) {
         corX = 20;
