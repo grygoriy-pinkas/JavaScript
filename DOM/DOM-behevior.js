@@ -21,6 +21,7 @@
 
 // Плюс этого подхода – динамически добавленные в DOM позже элементы автоматически получат этот функционал.
 
+
 // <!DOCTYPE HTML>
 // <html>
 
@@ -31,6 +32,19 @@
 //             height: 2000px;
 //             background-color: aliceblue;
 //             /* подсказка должна работать независимо от прокрутки */
+//         }
+
+//         #message {
+//             border: 1px solid black;
+//             border-radius: 4px;
+//             width: auto;
+//             height: 35px;
+//             padding: 10px;
+//             display: none;
+//             position: absolute;
+//             background-color: azure;
+//             display: none;
+//             position: absolute;
 //         }
 //         /* ваши стили */
 //     </style>
@@ -46,24 +60,13 @@
 
 //     <p>Прокрутите страницу, чтобы ссылки были вверху и проверьте, правильно ли показываются подсказки.</p>
 
+//     <div id="message"></div>
 
 //     <script>
 document.addEventListener('mouseover', showMessage);
 document.addEventListener('mouseout', hideMessage);
 
-//там мабуть через css треба поставити стилі, але ялишній раз попрактикувався в яві 
-var div = document.createElement('div');
-document.body.appendChild(div);
-div.style = `border: 1px solid black;
-        border-radius: 4px;
-        width: auto;
-        height: 35px;
-        padding: 10px;
-        display: none;
-        position: absolute;
-        background-color: azure;
-        `
-
+var div = document.getElementById('message');
 
 function showMessage() {
     var target = event.target;
@@ -72,19 +75,22 @@ function showMessage() {
     div.style.display = 'block';
     var map = target.getBoundingClientRect();
 
-    if (map.top < 60) {
-        div.style.top = map.top + 75 + 'px';
+    // console.log(map.height);
+    // console.log(target.offsetHeight);
+    if (map.top < div.offsetHeight + 5) {
+        div.style.top = map.bottom + window.pageYOffset + 5 + 'px';
     } else {
-        div.style.top = map.top - 60 + 'px';
+        div.style.top = map.top - div.offsetHeight - 5 + 'px';
     }
+    console.log(map.bottom);
+    // console.log(div.style.top);
+    console.log(div.style.top);
     div.style.left = map.left + 'px';
     div.innerHTML = message;
 }
 
 function hideMessage() {
     var target = event.target;
-    var message = target.getAttribute('data-tooltip');
-    if (!message) return;
     div.style.display = 'none';
 }
 //     </script>
