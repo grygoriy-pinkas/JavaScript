@@ -43,8 +43,7 @@
 //             display: none;
 //             position: absolute;
 //             background-color: azure;
-//             display: none;
-//             position: absolute;
+//             
 //         }
 //         /* ваши стили */
 //     </style>
@@ -90,7 +89,6 @@ function showMessage() {
 }
 
 function hideMessage() {
-    var target = event.target;
     div.style.display = 'none';
 }
 //     </script>
