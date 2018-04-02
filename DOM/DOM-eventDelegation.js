@@ -74,9 +74,13 @@
 //     <script>
 document.addEventListener('click', hide);
 
-function hide() {
+function hide(event) {
     var target = event.target.parentNode;
-    target.remove();
+    while (target != this)
+        if (target.className != 'pane') {
+            target.remove();
+        }
+    target = target.parentNode;
 }
 //     </script>
 
@@ -167,7 +171,7 @@ for (var i = 0; i < treeLis.length; i++) {
 
 console.log(container);
 
-function Hide(elem) {
+function hide(elem) {
     elem.onclick = function(e) {
         var gol = e.target;
         if (gol.tagName == 'SPAN') {
@@ -182,7 +186,7 @@ function Hide(elem) {
     }
 }
 
-new Hide(container);
+hide(container);
 //     </script>
 
 // </body>
@@ -260,11 +264,6 @@ table.onclick = function(e) {
             return;
         };
         let col = target.cellIndex;
-
-        if (typeof type == 'object') {
-            return;
-        }
-
 
         let elements = table.tBodies[0].children;
         let arr = [].slice.call(elements);
