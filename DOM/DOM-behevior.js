@@ -67,7 +67,7 @@ document.addEventListener('mouseout', hideMessage);
 
 var div = document.getElementById('message');
 
-function showMessage() {
+function showMessage(event) {
     var target = event.target;
     var message = target.getAttribute('data-tooltip');
     if (!message) return;
