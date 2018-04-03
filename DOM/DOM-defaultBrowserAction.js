@@ -134,7 +134,7 @@ function confirmation(event) {
 var thumbs = document.getElementById('thumbs');
 thumbs.addEventListener('click', commit);
 
-function commit() {
+function commit(event) {
     var target = event.target;
     var largeImg = document.getElementById('largeImg');
     if (target.nodeName == "IMG") {
