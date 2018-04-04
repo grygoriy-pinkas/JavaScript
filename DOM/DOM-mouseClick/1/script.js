@@ -2,25 +2,27 @@
 //console.log(list);
 
 list.addEventListener('click', actions);
-//var lastTarget;
+
+var last;
 
 function actions(e) {
     let target = e.target;
-    if (!e.ctrlKey) //без цієї умови не хотіло ставити виділення з ctrl. чому? 
 
+    if (!e.ctrlKey && !e.shiftKey) {
+        if (last) {
+            last.className = '';
+        }
         target.className = 'highlighted';
+        last = target;
+    }
     if (e.ctrlKey) {
-        console.log(target.className);
         if (target.className == 'highlighted') {
             target.className = ''
         } else {
             target.className = 'highlighted'
         }
-        //target.className = 'highlighted' ? target.className = '' : target.className = 'highlighted';
-        //if(target.className = '')
-        //target.className = '' ? target.className = 'highlighted' : ;
     }
-    var lastTarget = target;
+
 
     if (e.shiftKey) {
         //мій перший спосіб - неробочий
@@ -37,26 +39,24 @@ function actions(e) {
         //     lastTarget = lastTarget.nextElementSibling;
         //     console.log(lastTarget);
         // }
-        ifShift(lastTarget, e);
+        ifShift(last, e);
 
     }
-
 }
 
 function ifShift(lastTarget, e) {
     let target = e.target;
-    //третій варіант - взятий з розвязку. теж непрацює. допоможи розібратись
-    var startElem = lastTarget || ul.children[0];
+    var startElem = last || list.children[0];
     console.log(startElem.compareDocumentPosition(target));
     var isLastClickedBefore = startElem.compareDocumentPosition(target) & 4;
-    console.log(lastTarget);
+    console.log(last);
     console.log(startElem);
     console.log(target);
     console.log(isLastClickedBefore);
     if (isLastClickedBefore) {
-        for (var elem = startElem; elem != target; elem = elem.nextElementSibling) {
+        for (var elem = startElem; elem != target.nextElementSibling; elem = elem.nextElementSibling) {
             console.log("enter");
-            target.className = 'highlighted';
+            elem.className = 'highlighted';
         }
     }
 
