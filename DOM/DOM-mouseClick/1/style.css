@@ -5,3 +5,7 @@
 li {
     cursor: pointer;
 }
+
+.highlighted {
+    background-color: #0f0;
+}
