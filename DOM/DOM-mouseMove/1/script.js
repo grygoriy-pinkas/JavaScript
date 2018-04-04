@@ -5,10 +5,8 @@ house.addEventListener('mouseout', hideMessage);
 
 var div = document.getElementById('message');
 
-function showMessage() {
-    console.log(this);
-    var target = event.target;
-    console.log(target);
+function showMessage(event) {
+    let target = event.target;
     if (target.getAttribute('data-tooltip')) {
         var message = target.getAttribute('data-tooltip');
     } else {

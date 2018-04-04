@@ -28,7 +28,7 @@ tooltip.className = "tooltip";
 tooltip.innerHTML = "Подсказка";
 
 function HoverIntent(options) {
-
+    options = Object.create(options);
     options.elem.onmouseenter = function(event) {
         console.log(event);
         var purpose = document.elementFromPoint(event.clientX, event.clientY);
