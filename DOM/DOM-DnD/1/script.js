@@ -15,19 +15,15 @@
 var slider = document.getElementById('slider');
 var thumb = document.getElementsByClassName('thumb')[0];
 var sliderCoor = getCoords(slider);
-console.log(thumb.style.top);
 
 thumb.addEventListener('mousedown', prepare);
-document.addEventListener('mouseup', stop);
 
 function prepare(event) {
-    moveAt(event)
-    document.addEventListener('mousemove', move);
+    console.log('ok');
+    document.addEventListener('mousemove', moveAt);
+    moveAt(event);
 }
 
-function move(evt) {
-    moveAt(evt);
-}
 
 function moveAt(evt) {
     //ричажок рухається не зховсім біля курсора а на відстані відступу слайдера від вікна
@@ -41,16 +37,17 @@ function moveAt(evt) {
     } else {
         thumb.style.left = cX + 'px';
     }
-    //}
-    //thumb.style.top = cY + 'px';
+
 }
 
-function stop() {
-    //Uncaught TypeError: moveAt is not a function at HTMLDocument.move
-    //тут незнаю як правильно зупинити. при цьому рішенні зупиняє але повторно не мож пересувати повзунок
-    //і виникає така помилка
-    moveAt = null;
-}
+thumb.ondragstart = function() {
+    return false;
+};
+
+document.onmouseup = function() {
+    // document.onmousemove = document.onmouseup = null;
+    document.removeEventListener('mousemove', moveAt);
+};
 
 function getCoords(elem) { // кроме IE8-
     var box = elem.getBoundingClientRect();
