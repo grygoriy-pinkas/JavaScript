@@ -11,13 +11,8 @@ var leftCol = document.getElementsByClassName('column-left')[0];
 document.onscroll = function(e) {
     console.log(scroll);
     if (scroll < window.pageYOffset) {
-        // leftCol.appendChild(avatar);
-        avatar.style.position = 'fixed';
-        avatar.style.top = 0 + 'px';
-        avatar.style.left = '0px';
+        avatar.className = 'avatarNew';
     } else {
-        avatar.style.position = '';
-        avatar.style.top = '';
-        avatar.style.left = '';
+        avatar.className = 'avatar';
     }
 }

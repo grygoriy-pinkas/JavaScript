@@ -12,27 +12,23 @@
 
 
 var refers = document.getElementsByTagName('img');
-//добавив для візуалізації, але здається що зхагружає всі остальні картинки всі разом
-var render = 400;
-//console.log(refers);
-for (let i = 0; i < refers.length; i++) {
-    if (parseInt(refers[i].getBoundingClientRect().top) + window.pageYOffset < window.pageYOffset + document.documentElement.clientHeight) {
-        // console.log(parseInt(refers[i].getBoundingClientRect().top));
-        var attr = refers[i].getAttribute('realsrc');
-        // console.log(refers[i].getAttribute('realsrc'));
-        refers[i].setAttribute('src', attr);
-    }
-}
 
-document.onscroll = function(e) {
+var render = 300; //доводить що рішення правильне
+
+function load(refers) {
     for (let i = 0; i < refers.length; i++) {
-        if (parseInt(refers[i].getBoundingClientRect().top) + window.pageYOffset > window.pageYOffset + document.documentElement.clientHeight - render) {
+        if (parseInt(refers[i].getBoundingClientRect().top) + window.pageYOffset < window.pageYOffset + document.documentElement.clientHeight - render) {
             // console.log(parseInt(refers[i].getBoundingClientRect().top));
-            var attr = refers[i].getAttribute('realsrc');
-            // console.log(refers[i].getAttribute('realsrc'));
-            refers[i].setAttribute('src', attr);
+            if (refers[i].getAttribute('realsrc') && (refers[i].getAttribute('src')) != refers[i].getAttribute('realsrc')) {
+                var attr = refers[i].getAttribute('realsrc');
+                refers[i].setAttribute('src', attr);
+            }
         }
     }
 }
 
-//getBoundingClientRect()
+load(refers);
+
+document.onscroll = function(e) {
+    load(refers);
+}
