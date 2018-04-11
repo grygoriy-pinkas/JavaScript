@@ -9,10 +9,9 @@ var scroll = parseInt(avatar.getBoundingClientRect().top + avatar.clientHeight);
 var leftCol = document.getElementsByClassName('column-left')[0];
 
 document.onscroll = function(e) {
-    console.log(scroll);
     if (scroll < window.pageYOffset) {
-        avatar.className = 'avatarNew';
+        avatar.className = 'fixed';
     } else {
-        avatar.className = 'avatar';
+        avatar.classList.remove('fixed');
     }
 }
