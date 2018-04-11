@@ -13,11 +13,7 @@ function addScript(src, callback) {
 
     document.body.appendChild(script);
 
-    script.onload = function() {
-        callback();
-    }
+    script.onload = callback;
 }
 
-addScript("go.js", function() {
-    go();
-});
+addScript("go.js", go);

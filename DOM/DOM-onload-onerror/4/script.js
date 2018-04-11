@@ -21,13 +21,14 @@ function addScripts(arr, callback) {
         script.src = element;
         body.appendChild(script);
         count++;
-        script.onload = function() {
-            true;
-        }
+        //тут я обгорнув в умову, щоб не викликати лишніх помилок в консолі, тому що 
+        //script.onload виконувався на кожному витку циклу, а результат тільки в останньому
         if (count == arr.length) {
-            console.log(callback);
-            callback();
+            script.onload = function() {
+                callback();
+            }
         }
+
     });
 }
 
