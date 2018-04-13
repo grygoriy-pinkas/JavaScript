@@ -19,11 +19,17 @@ select.appendChild(option);
 
 showSelected(select);
 
+// function showSelected(select) {
+//     for (var i = 0; i < select.options.length; i++) {
+//         var option = select.options[i];
+//         if (option.selected) {
+//             alert(option.value + " " + option.text);
+//         }
+//     }
+// }
+
 function showSelected(select) {
-    for (var i = 0; i < select.options.length; i++) {
-        var option = select.options[i];
-        if (option.selected) {
-            alert(option.value + " " + option.text);
-        }
-    }
+    var selectedOption = select.options[select.selectedIndex];
+    alert(selectedOption.value + " - " + selectedOption.text);
+
 }
