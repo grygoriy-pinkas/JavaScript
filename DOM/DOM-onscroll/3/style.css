@@ -1,0 +1,10 @@
+.news-item {
+    width: 700px;
+    text-align: justify;
+    margin-top: 20px;
+}
+
+.news-item .title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
