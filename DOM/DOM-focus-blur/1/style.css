@@ -1,0 +1,13 @@
+    /* стиль для input с плейсхолдером */
+    
+    .placeholder {
+        color: blue;
+        font-family: Georgia;
+    }
+    /* стиль для подсказки над элементом (вместо плейсхолдера при фокусировке) */
+    
+    .placeholder-tooltip {
+        color: blue;
+        font-family: Georgia;
+        position: fixed;
+    }
