@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.polyfill.io/v1/polyfill.js?features=Element.prototype.closest"></script>
+
+    <link href="style.css" rel="stylesheet">
+
+    <style>
+        /*+ hide="Результат со стилями (показать стили)" */
+        
+        .rounded-horizontal-blocks .item {
+            float: left;
+            padding: 6px;
+            margin: 0 2px;
+            border: 1px solid gray;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 90%;
+            background: #FFF5EE;
+        }
+        
+        .vertical-splitter {
+            float: left;
+            padding: 6px;
+            margin: 0 2px;
+        }
+        
+        .item:hover {
+            text-decoration: underline;
+        }
+        /*+ hide="Результат со стилями (показать стили)" */
+        /* мої стилі*/
+        
+        .menu .menu_item {
+            float: left;
+            padding: 6px;
+            margin: 0 2px;
+            border: 1px solid gray;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 90%;
+            background: #FFF5EE;
+        }
+        
+        .item {
+            float: left;
+            padding: 6px;
+            margin: 0 2px;
+        }
+        
+        .menu_item:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Семантическое меню
+    важность: 5
+    Посмотрите на вёрстку горизонтального меню. -->
+
+    <div class="rounded-horizontal-blocks">
+        <div class="item">Главная</div>
+        <div class="vertical-splitter">|</div>
+        <div class="item">Товары</div>
+        <div class="item">Фотографии</div>
+        <div class="item">Контакты</div>
+    </div>
+
+    <!-- Что делает эту вёрстку несемантичной? Найдите 3 ошибки (или больше).
+
+Как бы вы сверстали меню правильно? -->
+    <div class="menu">
+        <div class="menu_item item">Главная</div>
+        <div class="item">|</div>
+        <div class="menu_item item">Товары</div>
+        <div class="menu_item item">Фотографии</div>
+        <div class="menu_item item">Контакты</div>
+    </div>
+
+
+</body>
+
+</html>
