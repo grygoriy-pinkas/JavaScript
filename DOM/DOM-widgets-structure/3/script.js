@@ -25,49 +25,51 @@ function ListSelect(options) {
         return selected;
     }
     this.getSelected = getSelected;
-}
 
+    var last;
 
-var last;
+    function actions(e) {
+        let target = e.target;
 
-function actions(e) {
-    let target = e.target;
-
-    if (!e.ctrlKey && !e.shiftKey) {
-        if (last) {
-            last.className = '';
+        if (!e.ctrlKey && !e.shiftKey) {
+            if (last) {
+                last.className = '';
+            }
+            target.className = 'highlighted';
+            last = target;
         }
-        target.className = 'highlighted';
-        last = target;
-    }
-    if (e.ctrlKey) {
-        if (target.className == 'highlighted') {
-            target.className = ''
-        } else {
-            target.className = 'highlighted'
+        if (e.ctrlKey) {
+            if (target.className == 'highlighted') {
+                target.className = ''
+            } else {
+                target.className = 'highlighted'
+            }
         }
-    }
 
 
-    if (e.shiftKey) {
-        ifShift(last, e);
-    }
-}
-
-function ifShift(lastTarget, e) {
-    let target = e.target;
-    var startElem = last || list.children[0];
-
-    var isLastClickedBefore = startElem.compareDocumentPosition(target) & 4;
-
-    if (isLastClickedBefore) {
-        for (var elem = startElem; elem != target.nextElementSibling; elem = elem.nextElementSibling) {
-            console.log("enter");
-            elem.className = 'highlighted';
+        if (e.shiftKey) {
+            ifShift(last, e);
         }
     }
 
+    function ifShift(lastTarget, e) {
+        let target = e.target;
+        var startElem = last || list.children[0];
+
+        var isLastClickedBefore = startElem.compareDocumentPosition(target) & 4;
+
+        if (isLastClickedBefore) {
+            for (var elem = startElem; elem != target.nextElementSibling; elem = elem.nextElementSibling) {
+                console.log("enter");
+                elem.className = 'highlighted';
+            }
+        }
+
+    }
+
 }
+
+
 
 
 var listSelect = new ListSelect({

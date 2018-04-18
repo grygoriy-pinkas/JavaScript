@@ -8,20 +8,19 @@
 // Все остальные методы и свойства пусть будут приватными.
 
 function Voter(options) {
-    var elem = options.elem;
-    let plus = elem.children[2];
-    let minus = elem.children[0];
-    var sume = elem.children[1];
-    var amount;
+    let plus = document.getElementsByClassName('up')[0];
+    let minus = document.getElementsByClassName('down')[0];
+    var sume = document.getElementsByClassName('vote')[0];
+    this.voteLevel = 1;
 
-    function setVote(measure) {
-        amount = measure;
+    function setVote(amount) {
+        sume.innerHTML = amount;
     }
     minus.onclick = function(e) {
-        sume.innerHTML = +sume.innerHTML - amount;
+        sume.innerHTML = +sume.innerHTML - voteLevel;
     }
     plus.onclick = function(e) {
-        sume.innerHTML = +sume.innerHTML + amount;
+        sume.innerHTML = +sume.innerHTML + voteLevel;
     }
 
     this.setVote = setVote;

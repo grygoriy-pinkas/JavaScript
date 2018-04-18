@@ -39,6 +39,31 @@ function Slider(options) {
         // document.onmousemove = document.onmouseup = null;
         document.removeEventListener('mousemove', moveAt);
     };
+
+    function moveAt(evt) {
+        console.log(sliderCoor);
+        //ричажок рухається не зховсім біля курсора а на відстані відступу слайдера від вікна
+        let cX = evt.clientX;
+        let cY = evt.clientY;
+
+        if (cX + sliderCoor.left < sliderCoor.left) {
+            thumb.style.left = sliderCoor.left + 'px';
+        } else if (cX + sliderCoor.left > slider.clientWidth + sliderCoor.left) {
+            thumb.style.left = slider.clientWidth + sliderCoor.left - thumb.clientWidth;
+        } else {
+            thumb.style.left = cX + 'px';
+        }
+    }
+
+
+    function getCoords(elem) { // кроме IE8-
+        var box = elem.getBoundingClientRect();
+
+        return {
+            top: box.top + pageYOffset,
+            left: box.left + pageXOffset
+        };
+    }
 }
 
 
@@ -46,30 +71,7 @@ function Slider(options) {
 // var thumb = document.getElementsByClassName('thumb')[0];
 
 
-function moveAt(evt) {
-    console.log(sliderCoor);
-    //ричажок рухається не зховсім біля курсора а на відстані відступу слайдера від вікна
-    let cX = evt.clientX;
-    let cY = evt.clientY;
 
-    if (cX + sliderCoor.left < sliderCoor.left) {
-        thumb.style.left = sliderCoor.left + 'px';
-    } else if (cX + sliderCoor.left > slider.clientWidth + sliderCoor.left) {
-        thumb.style.left = slider.clientWidth + sliderCoor.left - thumb.clientWidth;
-    } else {
-        thumb.style.left = cX + 'px';
-    }
-}
-
-
-function getCoords(elem) { // кроме IE8-
-    var box = elem.getBoundingClientRect();
-
-    return {
-        top: box.top + pageYOffset,
-        left: box.left + pageXOffset
-    };
-}
 
 var slide = new Slider({
     slider: document.getElementById('slider'),

@@ -9,9 +9,9 @@
 
 function Voter(options) {
     this.amount = 0;
-    var elem = options.elem;
-    let plus = elem.children[2];
-    let minus = elem.children[0];
+    let plus = document.getElementsByClassName('up')[0];
+    let minus = document.getElementsByClassName('down')[0];
+    var sume = document.getElementsByClassName('vote')[0];
     this.sum = elem.children[1];
 
     var sum = this.sum;

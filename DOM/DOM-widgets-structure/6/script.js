@@ -11,26 +11,26 @@
 
 // P.S. Код voter.js изменять нельзя, нужно не переписать Voter, а отнаследовать от него.
 
-
-
 function Voter(options) {
-    //я змінив цей рядокб додавши аргументи які раніше не передбачалися
-    //це мабуть неправильно(ряд. 12), але в мене чомусь не переоприділяло this.amount
-    //в StepVoter ряд. 42-43. Допоможи з цим розібратись
-    this.amount = options.step || 1;
-    let elem = options.elem;
-    let plus = elem.children[2];
-    let minus = elem.children[0];
-    var sum = elem.children[1];
-    var selfAmount = this.amount;
+    this.voteLevel = 1;
+    let plus = document.getElementsByClassName('up')[0];
+    let minus = document.getElementsByClassName('down')[0];
+    this.sum = document.getElementsByClassName('vote')[0];
+    var selfVote = this.voteLevel;
+    var sum = this.sum;
+
 
     minus.onclick = function(e) {
-        sum.innerHTML = +sum.innerHTML - selfAmount;
+        //console.log(selfVote);
+        sum.innerHTML = +sum.innerHTML - selfVote;
     }
     plus.onclick = function(e) {
-        sum.innerHTML = +sum.innerHTML + selfAmount;
+
+        sum.innerHTML = +sum.innerHTML + selfVote;
     }
+
 }
+
 
 Voter.prototype.setVote = function(amount) {
     this.sum.innerHTML = amount;
@@ -39,13 +39,20 @@ Voter.prototype.setVote = function(amount) {
 
 function StepVoter(options) {
     Voter.apply(this, arguments);
-    // this.amount = options.step;
-    //console.log(this.amount);
+    console.log(options.step);
+    console.log(this.voteLevel);
+    this.voteLevel = options.step;
+    console.log(this.voteLevel);
 }
 
 StepVoter.prototype = Object.create(Voter.prototype);
+StepVoter.prototype.constructor = Voter;
+
+
 
 var voter = new StepVoter({
     elem: document.getElementById('voter'),
     step: 2 // увеличивать/уменьшать сразу на 2 пункта
 });
+
+voter.setVote(4);
