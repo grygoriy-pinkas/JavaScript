@@ -6,24 +6,21 @@
 
 // В качестве исходного кода возьмите решение задачи Голосовалка.
 
-
 function Voter(options) {
-    this.amount = 0;
-    let plus = document.getElementsByClassName('up')[0];
-    let minus = document.getElementsByClassName('down')[0];
-    var sume = document.getElementsByClassName('vote')[0];
-    this.sum = elem.children[1];
+    this.voteLevel = 1;
+    var elem = this._elem = options.elem;
+    this.sum = document.getElementsByClassName('vote')[0];
+    elem.onclick = this._onClick.bind(this);
+}
 
-    var sum = this.sum;
-    minus.onclick = function(e) {
-
-        sum.innerHTML = +sum.innerHTML - 1;
+Voter.prototype._onClick = function(e) {
+    this.target = e.target;
+    if (this.target.className == 'up') {
+        this.sum.innerHTML = +this.sum.innerHTML + this.voteLevel;
     }
-    plus.onclick = function(e) {
-
-        sum.innerHTML = +sum.innerHTML + 1;
+    if (this.target.className == 'down') {
+        this.sum.innerHTML = +this.sum.innerHTML - this.voteLevel;
     }
-
 }
 
 //невдавалось мені this.amount встановити, то я поліз в розвязок

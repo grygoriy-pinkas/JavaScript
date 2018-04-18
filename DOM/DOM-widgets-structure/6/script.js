@@ -13,22 +13,19 @@
 
 function Voter(options) {
     this.voteLevel = 1;
-    let plus = document.getElementsByClassName('up')[0];
-    let minus = document.getElementsByClassName('down')[0];
+    var elem = this._elem = options.elem;
     this.sum = document.getElementsByClassName('vote')[0];
-    var selfVote = this.voteLevel;
-    var sum = this.sum;
+    elem.onclick = this._onClick.bind(this);
 
-
-    minus.onclick = function(e) {
-        //console.log(selfVote);
-        sum.innerHTML = +sum.innerHTML - selfVote;
+}
+Voter.prototype._onClick = function(e) {
+    this.target = e.target;
+    if (this.target.className == 'up') {
+        this.sum.innerHTML = +this.sum.innerHTML + this.voteLevel;
     }
-    plus.onclick = function(e) {
-
-        sum.innerHTML = +sum.innerHTML + selfVote;
+    if (this.target.className == 'down') {
+        this.sum.innerHTML = +this.sum.innerHTML - this.voteLevel;
     }
-
 }
 
 
@@ -39,14 +36,14 @@ Voter.prototype.setVote = function(amount) {
 
 function StepVoter(options) {
     Voter.apply(this, arguments);
-    console.log(options.step);
-    console.log(this.voteLevel);
     this.voteLevel = options.step;
-    console.log(this.voteLevel);
 }
 
 StepVoter.prototype = Object.create(Voter.prototype);
-StepVoter.prototype.constructor = Voter;
+//РЯДОК НИЖЧЕ ЗАМІНЯЄ ОГОЛОШЕННЯ НОВОГО КОНСТРУКТОРА ЧЕРЕЗ ФУНКЦІЮ???????????????В ТОМУ 
+//ВИПАДКУ ВИКОРИСТОВУЄТЬСЯ КОЛИ НЕПОТРІБНО ПЕРЕОПРИДІЛЯТИ ВЛАСТИВОСТІ????????????????
+//????????????????????????
+//StepVoter.prototype.constructor = Voter;
 
 
 
@@ -56,3 +53,15 @@ var voter = new StepVoter({
 });
 
 voter.setVote(4);
+
+//ОТЖЕ: ДЛЯ КОРЕКТНОСТІ РОБОТИ РОЗШИРЮВАНОГО КОНСТРУКТОРА ПОТРІБНО:
+// 1. Створити новий конструктор і визвати в ньому батьківський конструктор з своїми
+// властивостями і методами
+
+// function StepVoter(options) {
+//     Voter.apply(this, arguments);
+//    Т тут якщо потрібно, то переоприділити властивості
+// }
+// 2. Унаслідувати для дочірнього констуктора прототип батьківського шляхом створення нового
+// обєкту
+// StepVoter.prototype = Object.create(Voter.prototype);
