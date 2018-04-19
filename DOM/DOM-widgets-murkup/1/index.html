@@ -32,11 +32,9 @@
         }
         /*+ hide="Результат со стилями (показать стили)" */
         /* мої стилі*/
+        /* повторювались стилі і також вони були названі не характкрно для хорошої верстки */
         
         .menu .menu_item {
-            float: left;
-            padding: 6px;
-            margin: 0 2px;
             border: 1px solid gray;
             border-radius: 10px;
             cursor: pointer;
@@ -48,6 +46,7 @@
             float: left;
             padding: 6px;
             margin: 0 2px;
+            list-style: none;
         }
         
         .menu_item:hover {
@@ -73,12 +72,13 @@
     <!-- Что делает эту вёрстку несемантичной? Найдите 3 ошибки (или больше).
 
 Как бы вы сверстали меню правильно? -->
+    <!-- да і список був не в правильних тегах -->
     <div class="menu">
-        <div class="menu_item item">Главная</div>
-        <div class="item">|</div>
-        <div class="menu_item item">Товары</div>
-        <div class="menu_item item">Фотографии</div>
-        <div class="menu_item item">Контакты</div>
+        <li class="menu_item item">Главная</li>
+        <li class="item">|</li>
+        <li class="menu_item item">Товары</li>
+        <li class="menu_item item">Фотографии</li>
+        <li class="menu_item item">Контакты</li>
     </div>
 
 
