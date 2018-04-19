@@ -7,7 +7,6 @@
 // В качестве исходного кода возьмите решение задачи Голосовалка.
 
 function Voter(options) {
-    this.voteLevel = 1;
     var elem = this._elem = options.elem;
     this.sum = document.getElementsByClassName('vote')[0];
     elem.onclick = this._onClick.bind(this);
@@ -16,10 +15,10 @@ function Voter(options) {
 Voter.prototype._onClick = function(e) {
     this.target = e.target;
     if (this.target.className == 'up') {
-        this.sum.innerHTML = +this.sum.innerHTML + this.voteLevel;
+        this.sum.innerHTML = +this.sum.innerHTML + 1;
     }
     if (this.target.className == 'down') {
-        this.sum.innerHTML = +this.sum.innerHTML - this.voteLevel;
+        this.sum.innerHTML = +this.sum.innerHTML - 1;
     }
 }
 

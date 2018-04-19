@@ -10,17 +10,17 @@
 function Voter(options) {
     let plus = document.getElementsByClassName('up')[0];
     let minus = document.getElementsByClassName('down')[0];
-    var sume = document.getElementsByClassName('vote')[0];
-    this.voteLevel = 1;
+    const sumElem = document.getElementsByClassName('vote')[0];
+
 
     function setVote(amount) {
-        sume.innerHTML = amount;
+        sumElem.innerHTML = amount;
     }
     minus.onclick = function(e) {
-        sume.innerHTML = +sume.innerHTML - voteLevel;
+        sumElem.innerHTML = +sumElem.innerHTML - 1;
     }
     plus.onclick = function(e) {
-        sume.innerHTML = +sume.innerHTML + voteLevel;
+        sumElem.innerHTML = +sumElem.innerHTML + 1;
     }
 
     this.setVote = setVote;

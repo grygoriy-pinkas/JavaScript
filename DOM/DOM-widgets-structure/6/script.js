@@ -12,19 +12,18 @@
 // P.S. Код voter.js изменять нельзя, нужно не переписать Voter, а отнаследовать от него.
 
 function Voter(options) {
-    this.voteLevel = 1;
     var elem = this._elem = options.elem;
-    this.sum = document.getElementsByClassName('vote')[0];
+    this.sum = elem.querySelector('.vote');
     elem.onclick = this._onClick.bind(this);
-
 }
+
 Voter.prototype._onClick = function(e) {
-    this.target = e.target;
-    if (this.target.className == 'up') {
-        this.sum.innerHTML = +this.sum.innerHTML + this.voteLevel;
+    let target = e.target;
+    if (target.closest('.up')) {
+        this.sum.innerHTML = +this.sum.innerHTML + 1;
     }
-    if (this.target.className == 'down') {
-        this.sum.innerHTML = +this.sum.innerHTML - this.voteLevel;
+    if (target.closest('.down')) {
+        this.sum.innerHTML = +this.sum.innerHTML - 1;
     }
 }
 
@@ -36,20 +35,25 @@ Voter.prototype.setVote = function(amount) {
 
 function StepVoter(options) {
     Voter.apply(this, arguments);
-    this.voteLevel = options.step;
+    this.voteLevel = options.step || 1;
 }
 
 StepVoter.prototype = Object.create(Voter.prototype);
-//РЯДОК НИЖЧЕ ЗАМІНЯЄ ОГОЛОШЕННЯ НОВОГО КОНСТРУКТОРА ЧЕРЕЗ ФУНКЦІЮ???????????????В ТОМУ 
-//ВИПАДКУ ВИКОРИСТОВУЄТЬСЯ КОЛИ НЕПОТРІБНО ПЕРЕОПРИДІЛЯТИ ВЛАСТИВОСТІ????????????????
-//????????????????????????
-//StepVoter.prototype.constructor = Voter;
+StepVoter.prototype.constructor = StepVoter;
 
-
+StepVoter.prototype._onClick = function(e) {
+    let target = e.target;
+    if (target.closest('.up')) {
+        this.sum.innerHTML = +this.sum.innerHTML + this.voteLevel;
+    }
+    if (target.closest('.down')) {
+        this.sum.innerHTML = +this.sum.innerHTML - this.voteLevel;
+    }
+}
 
 var voter = new StepVoter({
     elem: document.getElementById('voter'),
-    step: 2 // увеличивать/уменьшать сразу на 2 пункта
+    step: 3 // увеличивать/уменьшать сразу на 2 пункта
 });
 
 voter.setVote(4);
@@ -65,3 +69,4 @@ voter.setVote(4);
 // 2. Унаслідувати для дочірнього констуктора прототип батьківського шляхом створення нового
 // обєкту
 // StepVoter.prototype = Object.create(Voter.prototype);
+// StepVoter.prototype.constructor = StepVoter; призначити свій конструктор знову
