@@ -35,26 +35,14 @@ class Voter {
 
 }
 
-//БАТЬКІВСЬКИЙ КЛАС АВТОНОМНО ПРАЦЮЄ ДОБРЕ
-// var vot = new Voter({
-//     elem: document.getElementById('voter')
-// });
 
-// vot.setVote(5);
-
-// ????????????????????????????
-//НЕ МОЖУ РОЗІБРАТИСЬ З БАТЬКІВСЬКИМ КОНСТРУКТОРОМ, НЕ БАЧИТЬ АРГУМЕНТІВ 
-// ????????????????????????????????????
 class StepVoter extends Voter {
-    //ЯКЩО Я НЕ ОГОЛОШУЮ ТУТ КОНСТРУКТОРА, ТО БЕРЕТЬСЯ БАТЬКІВСЬКИЙ
-    // constructor(options) {
-    //     super();
-    // }
 
-    //пробую достати нову властивість через геттер
-    get voteLevel() {
+    constructor(options) {
+        super(options);
         this.voteLevel = options.step || 1;
     }
+
 
     onClick(e) {
         let target = e.target;
@@ -72,4 +60,4 @@ var voter = new StepVoter({
     step: 3 // увеличивать/уменьшать сразу на 2 пункта
 });
 
-voter.setVote(4);
+voter.setVote(2);
