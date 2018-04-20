@@ -20,6 +20,17 @@ function Voter(options) {
 
     function setVote(amount) {
         sumElem.innerHTML = amount;
+        //ВИХОДИТЬ ТРЕБА БУЛО ПЕРЕНЕСТИ ФУНКЦІЮ В СЕРЕДИНУ setVote
+        //ТОБТО ЛОГІКА В ТОМУ, ЩОБ ПРИ ЯКИХОСЬ ДІЯХ, В ДАНОМУ ВИПАДКУ ЗАПИС КІЛЬКОСТІ ГОЛОСІВ 
+        //СТВОРЮВАЛАСЬ ЩЕ ОДНА (ШТУЧНА ПОДІЯ І ЛІСЕНЕР ЧЕКАВ НА НЕЇ І ЩОСЬ РОБИВ????????)
+        //function change(sumElem) {
+        var widgetEvent = new CustomEvent('change', {
+            bubbles: true,
+            // detail - стандартное свойство CustomEvent для произвольных данных
+            detail: sumElem.innerHTML
+        });
+        elem.dispatchEvent(widgetEvent);
+        // }
     }
 
 
@@ -30,14 +41,7 @@ function Voter(options) {
         setVote(+sumElem.innerHTML + 1);
     }
 
-    //function change(sumElem) {
-    var widgetEvent = new CustomEvent('change', {
-        bubbles: true,
-        // detail - стандартное свойство CustomEvent для произвольных данных
-        detail: sumElem.innerHTML
-    });
-    elem.dispatchEvent(widgetEvent);
-    // }
+
 
     this.setVote = setVote;
 }
