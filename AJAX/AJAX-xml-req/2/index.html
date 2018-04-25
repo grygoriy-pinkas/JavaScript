@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+    <button onclick="loadPhones()" id="button">Загрузить phones.json!</button>
+    <ul id="list"></ul>
+    <script>
+        function loadPhones() {
+            fetch('phones.json')
+                .then(function(response) {
+                    //тут замість тексту пробував responce.json(), видавало мені помилки про токени
+                    //що я не так робив? може парсив неправильно
+                    var a = response.text();
+                    return a;
+                })
+                .then(function(a) {
+                    var phones = JSON.parse(a);
+                    for (let i = 0; i < phones.length; i++) {
+                        let car = phones[i].carrier || '';
+                        let li = document.createElement('li');
+                        list.append(li);
+                        li.innerHTML = phones[i].name + ' - ' + car;
+                    }
+                })
+                .catch(alert); //вивід помилок
+        }
+    </script>
+
+</body>
+
+</html>
