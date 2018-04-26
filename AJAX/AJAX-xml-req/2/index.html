@@ -15,11 +15,11 @@
                 .then(function(response) {
                     //тут замість тексту пробував responce.json(), видавало мені помилки про токени
                     //що я не так робив? може парсив неправильно
-                    var a = response.text();
-                    return a;
+                    // return response.text();
+                    return response.json();
                 })
-                .then(function(a) {
-                    var phones = JSON.parse(a);
+                .then(function(phones) {
+                    // var phones = JSON.parse(data);
                     for (let i = 0; i < phones.length; i++) {
                         let car = phones[i].carrier || '';
                         let li = document.createElement('li');
@@ -27,7 +27,7 @@
                         li.innerHTML = phones[i].name + ' - ' + car;
                     }
                 })
-                .catch(alert); //вивід помилок
+                .catch(console.error()); //вивід помилок
         }
     </script>
 
