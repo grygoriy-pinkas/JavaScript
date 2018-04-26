@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js"></script>
+</head>
+
+<body>
+
+    <div id="grid-holder"></div>
+
+    <script type="text/template" id="grid-template">
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Возраст</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i < list.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%=list[i].name%>
+                        </td>
+                        <td>
+                            <%=list[i].age%>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </script>
+
+    <script>
+        var users = [{
+            name: "Вася",
+            age: 10
+        }, {
+            name: "Петя",
+            age: 15
+        }, {
+            name: "Женя",
+            age: 20
+        }, {
+            name: "Маша",
+            age: 25
+        }, {
+            name: "Даша",
+            age: 30
+        }, ];
+
+        // ваш код, чтобы сгенерировать таблицу с юзерами (table/tr/td) по шаблону и данным users
+        // выведите таблицу внутри #grid-holder
+
+
+        //мій скрипт
+        // var grid = document.getElementById('grid-holder');
+        // var templ = _.template(document.getElementById('grid-template').innerHTML.trim());
+        // var res = templ({
+        //     list: users
+        // });
+        // grid.innerHTML = res; //також пробував з append();
+
+        //НЕ ПРАЦЮЄ. ВИДАЄ ПОМИЛКУ  І У ЇХНЬОМУ КОДІ І У МОЄМУ НЕЗНАЮ ЩО РОБИТИ
+
+        //     lodash.js:10047 Uncaught SyntaxError: missing ) after argument list
+        // at Function (<anonymous>)
+        // at lodash.js:10047
+        // at attempt (lodash.js:10312)
+        // at Function.template (lodash.js:10046)
+        // at (index):89
+
+        //їхній скрипт
+        var tmpl = document.getElementById('grid-template').innerHTML.trim();
+        tmpl = _.template(tmpl);
+
+
+        document.getElementById('grid-holder').innerHTML = tmpl({
+            list: users
+        });
+    </script>
+
+</body>
+
+</html>
